@@ -40,7 +40,7 @@ public class JFLogin extends JFrame {
         this.setTitle("Login");
         //this.setSize(150, 150);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        System.out.println("RAND_VALUE: " + RandomValue.getRandId(1111, 9999));
+        /*System.out.println("RAND_VALUE: " + RandomValue.getRandId(1111, 9999));
         System.out.println("RAND_VALUE: " + RandomValue.randInt(1, 9));
         System.out.println("SALT: " + MD5MoreSecure.usage("testPassword"));
         System.out.println("SALT_PREV: " + MD5MoreSecure.usage("testPasswordd"));
@@ -65,7 +65,7 @@ public class JFLogin extends JFrame {
             Logger.getLogger(JFLogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(JFLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         ImageIcon imageIcon = onResizeLabelIcon("/images/login-icon.png", 90, 90);
         jLblLoginLogo.setIcon(imageIcon);
         jLblLoginLogo.setText("");
@@ -75,6 +75,14 @@ public class JFLogin extends JFrame {
                 System.out.println("Yay you clicked me");
             }
 
+        });
+        jBtnLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFDashboard jFDashboard = new JFDashboard();
+                jFDashboard.setVisible(true);
+                dispose();
+            }
         });
         jBtnExit.addActionListener(new ActionListener() {
             @Override
