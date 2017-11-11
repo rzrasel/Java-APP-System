@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  * <p>
  * A public class for <b>SQLite connection</b>. <i>Support singleton
  * pattern</i>, also create an object using <i>new keyword</i>.
- * 
+ *
  * <br /><br />
  * - Set up SQLite JDBC driver. Download latest version of
  * sqlite-jdbc-(VERSION).jar from sqlite-jdbc repository.
@@ -31,7 +31,7 @@ import java.util.logging.Logger;
  * <li>Create an object using new Keyword new SQLiteConnection(String
  * argDbFilePath)</li>
  * </ul>
- * 
+ *
  * <br />
  * - <b>Methods</b> inside this class:
  * <ul>
@@ -52,14 +52,14 @@ import java.util.logging.Logger;
  * <li>public void {@link #onCloseConnection() onCloseConnection()}</li>
  * <li>public void {@link #onClose() onClose()}</li>
  * </ul>
- * 
+ *
  * See {@link
  * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1">HTTP/1.1
  * documentation</a>}. null {@link package.class#member label}
  * {@link com.rz.libraries.SQLiteConnection#getInstance(java.lang.String)}
  * {@link getFoo()}
  * {@link #getInstance(String argDbFilePath) getInstance(String argDbFilePath)}
- * 
+ *
  * <br /><br />
  * Note: Additional information, e.g. your implementation notes or remarks.
  * </p>
@@ -68,7 +68,8 @@ import java.util.logging.Logger;
  * @version 20171101.0.1
  * @author Rz Rasel
  * @since V-20171101.0.1
- * @see <a href="https://bitbucket.org/xerial/sqlite-jdbc/downloads/">SQLite-Jdbc</a>
+ * @see
+ * <a href="https://bitbucket.org/xerial/sqlite-jdbc/downloads/">SQLite-Jdbc</a>
  * @note If you spin a quark, it will spin forever!
  */
 public class SQLiteConnection {
@@ -110,9 +111,9 @@ public class SQLiteConnection {
 
     /**
      * <p>
-     * A public method
-     * {@link #onOpenConnection() onOpenConnection()}
+     * A public method {@link #onOpenConnection() onOpenConnection()}
      * </p>
+     *
      * @return Connection
      */
     public Connection onOpenConnection() {
@@ -148,6 +149,17 @@ public class SQLiteConnection {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         return resultSet;
+    }
+
+    public boolean onSqlExecute(String argSqlQuery) {
+        boolean isExecuteQuery = false;
+        try {
+            statement = connection.createStatement();
+            isExecuteQuery = statement.execute(argSqlQuery);
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+        return isExecuteQuery;
     }
 
     public void onCloseResultSet(ResultSet argResultSet) {

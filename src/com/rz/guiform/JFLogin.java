@@ -9,6 +9,9 @@ import com.rz.libraries.MD5MoreSecure;
 import com.rz.libraries.PasswordEncryptionService;
 import com.rz.libraries.RandomValue;
 import java.awt.Cursor;
+import java.awt.Dialog;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -80,7 +83,12 @@ public class JFLogin extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFDashboard jFDashboard = new JFDashboard();
+                jFDashboard.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                /*GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
+                device.setFullScreenWindow(jFDashboard);*/
+                jFDashboard.setLocationRelativeTo(null);
                 jFDashboard.setVisible(true);
+                //jFDashboard.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
                 dispose();
             }
         });

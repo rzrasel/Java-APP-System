@@ -5,8 +5,12 @@
  */
 package com.rz.guiform;
 
+import java.awt.Dialog;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 /**
@@ -15,12 +19,15 @@ import javax.swing.JFrame;
  */
 public class JFDashboard extends javax.swing.JFrame {
 
+    public JFDashboard jFDashboard;
+
     /**
      * Creates new form jFDashboard
      */
     public JFDashboard() {
         initComponents();
         this.setTitle("Dashboard");
+        jFDashboard = this;
         //this.setSize(150, 150);
         //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -45,6 +52,31 @@ public class JFDashboard extends javax.swing.JFrame {
                 dispose();
             }
         });
+        jBtnTest.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFTestFrame jFTestFrame = new JFTestFrame();
+                jFTestFrame.setLocationRelativeTo(jFDashboard);
+                ModalFrameUtil.showAsModal(jFTestFrame, jFDashboard);
+                //jFTestFrame.setLocationRelativeTo(null);
+                //jFDashboard.setEnabled(false);
+                //jFTestFrame.setVisible(true);
+                /*jFTestFrame.onSetParentWindow(jFDashboard);
+                jFTestFrame.setLocationRelativeTo(null);
+                //jFTestFrame.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+                jFTestFrame.setVisible(true);*/
+
+                /*JDialog jd = new JDialog(jFTestFrame);
+                jd.setModal(true);
+                jd.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                jd.setLocationByPlatform(true);
+                jd.setLocationRelativeTo(jFTestFrame);
+                //location = frame.getLocationOnScreen();
+                //jd.setLocation(location);
+                jd.pack();
+                jd.setVisible(false);*/
+            }
+        });
     }
 
     /**
@@ -56,17 +88,27 @@ public class JFDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jBtnTest = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jBtnTest.setText("Test");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(136, 136, 136)
+                .addComponent(jBtnTest)
+                .addContainerGap(189, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(72, 72, 72)
+                .addComponent(jBtnTest)
+                .addContainerGap(199, Short.MAX_VALUE))
         );
 
         pack();
@@ -125,5 +167,13 @@ public class JFDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnTest;
     // End of variables declaration//GEN-END:variables
 }
+/*
+http://www.java2s.com/Code/Java/Swing-JFC/Showthegivenframeasmodaltothespecifiedowner.htm
+https://stackoverflow.com/questions/1481405/how-to-make-a-jframe-modal-in-swing-java
+https://www.java-tips.org/java-se-tips-100019/15-javax-swing/1768-dialog-modality.html
+http://tech.chitgoks.com/2013/05/22/how-to-create-modal-stage-window-from-a-jframe-in-java-fx-2/
+http://tech.chitgoks.com/2013/07/08/how-to-create-confirm-dialog-window-in-java-fx-2/
+*/

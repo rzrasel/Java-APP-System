@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.rz.migration;
+package com.rz.DbMigration;
 
 import com.rz.libraries.DBConnection.SQLiteConnection;
+import com.rz.libraries.RandomValue;
 import java.sql.Connection;
 
 /**
@@ -18,5 +19,9 @@ public class CreateDatabase {
         sQLiteConnection = SQLiteConnection.getInstance("sqlite/create.sqlite3");
         Connection conn = sQLiteConnection.onOpenConnection();
         sQLiteConnection.onClose();
+        System.out.println("ID# " + RandomValue.getRandId(1111, 9999));
     }
 }
+/*
+Default User ID: 15103846121779
+*/
