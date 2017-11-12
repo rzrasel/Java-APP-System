@@ -14,27 +14,43 @@ import java.sql.Connection;
  * @author Rz Rasel
  */
 public class CreateTableAPPProject {
+
     private static SQLiteConnection sQLiteConnection;
+
     public static void main(String args[]) {
-        String tblPrefix = "tbl_";
+        String tblPrefix = DbConostans.DB_INFO.TBL_PREFIX;
+        String tblName = "app_api_project";
         String sqlQuery = "";
-        sQLiteConnection = SQLiteConnection.getInstance("sqlite/create.sqlite3");
+        sQLiteConnection = SQLiteConnection.getInstance(DbConostans.DB_INFO.DB_NAME);
         Connection conn = sQLiteConnection.onOpenConnection();
-        sqlQuery = "DROP TABLE IF EXISTS " + tblPrefix + "app_api_project";
-        sQLiteConnection.onSqlExecute(sqlQuery);
-        sqlQuery = "CREATE TABLE IF NOT EXISTS " + tblPrefix + "app_api_project ("
+        sqlQuery = "DROP TABLE IF EXISTS " + tblPrefix + tblName;
+        sQLiteConnection.onExecuteQuery(sqlQuery);
+        sqlQuery = "CREATE TABLE IF NOT EXISTS " + tblPrefix + tblName + " ("
                 + " taap_project_id BIGINT(20) NOT NULL,"
-                + " taap_project_modified_by BIGINT(20) NULL,"
+                + " taap_project_name TEXT NOT NULL,"
+                + " taap_project_details TEXT NULL,"
+                + " taap_project_package_bundle TEXT NOT NULL,"
+                + " taap_project_latest_ver_code TEXT NOT NULL,"
+                + " taap_project_latest_ver_name TEXT NOT NULL,"
+                + " taap_project_lowest_valid_code TEXT NOT NULL,"
+                + " taap_project_lowest_valid_name TEXT NOT NULL,"
+                + " taap_project_status BOOLEAN NOT NULL,"
+                + " taap_project_create_date DATETIME NOT NULL,"
+                + " taap_project_modify_date DATETIME NOT NULL,"
+                + " taap_project_created_by BIGINT(20) NOT NULL,"
+                + " taap_project_modified_by BIGINT(20) NOT NULL,"
                 + " CONSTRAINT pk_app_api_project_taap_project_id PRIMARY KEY (taap_project_id)"
                 + ");";
-        sQLiteConnection.onSqlExecute(sqlQuery);
+        sQLiteConnection.onExecuteQuery(sqlQuery);
         sQLiteConnection.onClose();
         System.out.println("ID# " + RandomValue.getRandId(1111, 9999));
+        System.out.println("SQL: " + sqlQuery);
     }
 }
 /*
 https://github.com/rzrasel/Android-Module-Library
 http://www.sqlitetutorial.net/sqlite-java/create-table/
+https://www.tutorialspoint.com/sql/sql-drop-table.htm
 
 Cursor c = null;
 try {
@@ -50,4 +66,4 @@ try {
         c.close();
 }
 String query = String.format("SELECT %s FROM %s LIMIT 1", column, table);
-*/
+ */

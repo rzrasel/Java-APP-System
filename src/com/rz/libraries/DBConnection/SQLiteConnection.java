@@ -141,17 +141,7 @@ public class SQLiteConnection {
         }
     }
 
-    public ResultSet onSqlQuery(String argSqlQuery) {
-        try {
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(argSqlQuery);
-        } catch (SQLException ex) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-        }
-        return resultSet;
-    }
-
-    public boolean onSqlExecute(String argSqlQuery) {
+    public boolean onExecuteQuery(String argSqlQuery) {
         boolean isExecuteQuery = false;
         try {
             statement = connection.createStatement();
@@ -160,6 +150,17 @@ public class SQLiteConnection {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         return isExecuteQuery;
+    }
+
+    public ResultSet onSqlQuery(String argSqlQuery) {
+        try {
+            //statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(argSqlQuery);
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultSet;
     }
 
     public void onCloseResultSet(ResultSet argResultSet) {

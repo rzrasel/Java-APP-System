@@ -5,6 +5,8 @@
  */
 package com.rz.guiform;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author developer
@@ -18,6 +20,7 @@ public class JFTestFrame extends javax.swing.JFrame {
      */
     public JFTestFrame() {
         initComponents();
+        JOptionPane.showMessageDialog(this, "Cant Minimize");
     }
 
     public void onSetParentWindow(JFDashboard argJFDashboard) {
@@ -37,6 +40,7 @@ public class JFTestFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jButton1.setText("jButton1");
 

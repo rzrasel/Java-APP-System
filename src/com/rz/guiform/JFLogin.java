@@ -5,6 +5,7 @@
  */
 package com.rz.guiform;
 
+import com.rz.guimodel.ModelUserLogin;
 import com.rz.libraries.MD5MoreSecure;
 import com.rz.libraries.PasswordEncryptionService;
 import com.rz.libraries.RandomValue;
@@ -23,6 +24,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -33,6 +36,8 @@ import javax.swing.JFrame;
  * @author developer
  */
 public class JFLogin extends JFrame {
+
+    private Timer appTimer = new Timer();
 
     //private JFLogin jFLogin;
     /**
@@ -72,6 +77,8 @@ public class JFLogin extends JFrame {
         ImageIcon imageIcon = onResizeLabelIcon("/images/login-icon.png", 90, 90);
         jLblLoginLogo.setIcon(imageIcon);
         jLblLoginLogo.setText("");
+        //jLblMsg.setText("Please login");
+        jLblMsg.setText("<html><font color='black'>Please login</font></html>");
         jLblLoginLogo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -82,14 +89,28 @@ public class JFLogin extends JFrame {
         jBtnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFDashboard jFDashboard = new JFDashboard();
-                jFDashboard.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                /*GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
-                device.setFullScreenWindow(jFDashboard);*/
-                jFDashboard.setLocationRelativeTo(null);
-                jFDashboard.setVisible(true);
-                //jFDashboard.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
-                dispose();
+                boolean isLoggedIn = false;
+                String userIdentity = "";
+                String userPassword = "";
+                userIdentity = jTxtEmail.getText();
+                userPassword = new String(jTxtPassword.getPassword());
+                ModelUserLogin modelUserLogin = new ModelUserLogin();
+                isLoggedIn = modelUserLogin.isLoggedIn(userIdentity, userPassword);
+                if (isLoggedIn) {
+                    JFDashboard jFDashboard = new JFDashboard();
+                    jFDashboard.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                    /*GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
+                    device.setFullScreenWindow(jFDashboard);*/
+                    jFDashboard.setLocationRelativeTo(null);
+                    jFDashboard.setVisible(true);
+                    //jFDashboard.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
+                    dispose();
+                } else {
+                    appTimer = new Timer();
+                    appTimer.schedule(new AppMsgTimer(), 0, 1000);
+                    //jLblMsg.setText("Invalid e-mail or password");
+                    jLblMsg.setText("<html><font color='red'>Invalid e-mail or password</font></html>");
+                }
             }
         });
         jBtnExit.addActionListener(new ActionListener() {
@@ -117,18 +138,19 @@ public class JFLogin extends JFrame {
 
         jPanelLoginBg = new javax.swing.JPanel();
         jPanelLoginForm = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelEmail = new javax.swing.JLabel();
         jTxtEmail = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelPassword = new javax.swing.JLabel();
         jTxtPassword = new javax.swing.JPasswordField();
         jBtnExit = new javax.swing.JButton();
         jBtnLogin = new javax.swing.JButton();
         jLblLoginLogo = new javax.swing.JLabel();
         jLblForgotPassword = new javax.swing.JLabel();
         jLblRegistration = new javax.swing.JLabel();
+        jLblMsg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setName("jFLogin"); // NOI18N
+        setName("JFLogin"); // NOI18N
 
         jPanelLoginBg.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(185, 185, 185), 1, true), "Login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(185, 185, 185))); // NOI18N
         jPanelLoginBg.setName("jPanelLoginBg"); // NOI18N
@@ -136,9 +158,9 @@ public class JFLogin extends JFrame {
         jPanelLoginForm.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(185, 185, 185), 1, true));
         jPanelLoginForm.setName("jPanelLoginForm"); // NOI18N
 
-        jLabel1.setText("E-mail:");
+        jLabelEmail.setText("E-mail:");
 
-        jLabel2.setText("Password:");
+        jLabelPassword.setText("Password:");
 
         jBtnExit.setText("Exit");
 
@@ -149,6 +171,8 @@ public class JFLogin extends JFrame {
         jLblForgotPassword.setText("Forgot Password");
 
         jLblRegistration.setText("Registration");
+
+        jLblMsg.setText("Please Login");
 
         javax.swing.GroupLayout jPanelLoginFormLayout = new javax.swing.GroupLayout(jPanelLoginForm);
         jPanelLoginForm.setLayout(jPanelLoginFormLayout);
@@ -161,12 +185,13 @@ public class JFLogin extends JFrame {
                         .addComponent(jLblLoginLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelLoginFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabelPassword)
+                            .addComponent(jLabelEmail))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelLoginFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTxtEmail)
-                            .addComponent(jTxtPassword)))
+                            .addComponent(jTxtPassword)
+                            .addComponent(jLblMsg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLoginFormLayout.createSequentialGroup()
                         .addGap(0, 64, Short.MAX_VALUE)
                         .addComponent(jLblForgotPassword)
@@ -185,12 +210,14 @@ public class JFLogin extends JFrame {
                 .addGroup(jPanelLoginFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLblLoginLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelLoginFormLayout.createSequentialGroup()
+                        .addComponent(jLblMsg)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelLoginFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
+                            .addComponent(jLabelEmail)
                             .addComponent(jTxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelLoginFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
+                            .addComponent(jLabelPassword)
                             .addComponent(jTxtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(jPanelLoginFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelLoginFormLayout.createSequentialGroup()
@@ -322,10 +349,11 @@ public class JFLogin extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnExit;
     private javax.swing.JButton jBtnLogin;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelEmail;
+    private javax.swing.JLabel jLabelPassword;
     private javax.swing.JLabel jLblForgotPassword;
     private javax.swing.JLabel jLblLoginLogo;
+    private javax.swing.JLabel jLblMsg;
     private javax.swing.JLabel jLblRegistration;
     private javax.swing.JPanel jPanelLoginBg;
     private javax.swing.JPanel jPanelLoginForm;
@@ -336,6 +364,29 @@ public class JFLogin extends JFrame {
         //ImageIcon imageIcon = new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login-icon.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
         ImageIcon imageIcon = new ImageIcon(new javax.swing.ImageIcon(getClass().getResource(argImageLocation)).getImage().getScaledInstance(argWidth, argHeight, Image.SCALE_SMOOTH));
         return imageIcon;
+    }
+
+    class AppMsgTimer extends TimerTask {
+
+        //int countdown = 100;
+        int countdown = 0;
+
+        /*public AppMsgTimer() {
+            //
+        }*/
+
+        public void run() {
+            //countdown = countdown - 1;
+            countdown++;
+            System.out.println(countdown);
+            //label.setText(countdown +"second's left");
+            if (countdown > 3) {
+                //jLblMsg.setText("Please login");
+                jLblMsg.setText("<html><font color='black'>Please login</font></html>");
+                appTimer.cancel();
+                appTimer.purge();
+            }
+        }
     }
 }
 /*

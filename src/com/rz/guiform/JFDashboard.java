@@ -5,11 +5,14 @@
  */
 package com.rz.guiform;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.AbstractButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
@@ -57,6 +60,11 @@ public class JFDashboard extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 JFTestFrame jFTestFrame = new JFTestFrame();
                 jFTestFrame.setLocationRelativeTo(jFDashboard);
+                jFTestFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                jFTestFrame.setResizable(false);
+                removeMinMaxClose(jFTestFrame);
+                jFTestFrame.addWindowListener(getWindowAdapter(jFTestFrame));
+                //frame.pack();
                 ModalFrameUtil.showAsModal(jFTestFrame, jFDashboard);
                 //jFTestFrame.setLocationRelativeTo(null);
                 //jFDashboard.setEnabled(false);
@@ -66,7 +74,7 @@ public class JFDashboard extends javax.swing.JFrame {
                 //jFTestFrame.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
                 jFTestFrame.setVisible(true);*/
 
-                /*JDialog jd = new JDialog(jFTestFrame);
+ /*JDialog jd = new JDialog(jFTestFrame);
                 jd.setModal(true);
                 jd.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 jd.setLocationByPlatform(true);
@@ -77,6 +85,23 @@ public class JFDashboard extends javax.swing.JFrame {
                 jd.setVisible(false);*/
             }
         });
+    }
+
+    private WindowAdapter getWindowAdapter(JFrame argJFrame) {
+        return new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                super.windowClosing(we);
+                //JOptionPane.showMessageDialog(frame, "Cant Exit");
+            }
+
+            @Override
+            public void windowIconified(WindowEvent we) {
+                argJFrame.setState(JFrame.NORMAL);
+                //JOptionPane.showMessageDialog(frame, "Cant Minimize");
+                System.out.println("CLICK_MIN_BUTTON");
+            }
+        };
     }
 
     /**
@@ -91,6 +116,7 @@ public class JFDashboard extends javax.swing.JFrame {
         jBtnTest = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setName("JFDashboard"); // NOI18N
 
         jBtnTest.setText("Test");
 
@@ -169,6 +195,17 @@ public class JFDashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnTest;
     // End of variables declaration//GEN-END:variables
+    public void removeMinMaxClose(Component comp) {
+        if (comp instanceof AbstractButton) {
+            comp.getParent().remove(comp);
+        }
+        if (comp instanceof Container) {
+            Component[] comps = ((Container) comp).getComponents();
+            for (int x = 0, y = comps.length; x < y; x++) {
+                removeMinMaxClose(comps[x]);
+            }
+        }
+    }
 }
 /*
 http://www.java2s.com/Code/Java/Swing-JFC/Showthegivenframeasmodaltothespecifiedowner.htm
@@ -176,4 +213,4 @@ https://stackoverflow.com/questions/1481405/how-to-make-a-jframe-modal-in-swing-
 https://www.java-tips.org/java-se-tips-100019/15-javax-swing/1768-dialog-modality.html
 http://tech.chitgoks.com/2013/05/22/how-to-create-modal-stage-window-from-a-jframe-in-java-fx-2/
 http://tech.chitgoks.com/2013/07/08/how-to-create-confirm-dialog-window-in-java-fx-2/
-*/
+ */

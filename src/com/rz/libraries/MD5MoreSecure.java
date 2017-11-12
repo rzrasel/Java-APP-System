@@ -32,6 +32,21 @@ public class MD5MoreSecure {
         }
         return generatedPassword;
     }
+    
+    public static String getCryption(String argPasswordToHash) {
+        String generatedPassword = null;
+        //String passwordToHash = "password";
+        String passwordToHash = argPasswordToHash;
+        try {
+            byte[] salt = getSalt();
+            generatedPassword = getSecurePassword(passwordToHash, salt);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(MD5MoreSecure.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchProviderException ex) {
+            Logger.getLogger(MD5MoreSecure.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return generatedPassword;
+    }
 
     public static String getSecurePassword(String argPasswordToHash, byte[] argSalt) {
         String generatedPassword = null;
