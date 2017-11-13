@@ -114,11 +114,32 @@ public class JFDashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jBtnTest = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Dashboard");
         setName("JFDashboard"); // NOI18N
 
         jBtnTest.setText("Test");
+
+        jMenu1.setText("File");
+
+        jMenuItem1.setText("jMenuItem1");
+        jMenu1.add(jMenuItem1);
+
+        jMenu3.setText("jMenu3");
+        jMenu1.add(jMenu3);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -134,7 +155,7 @@ public class JFDashboard extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(72, 72, 72)
                 .addComponent(jBtnTest)
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addContainerGap(177, Short.MAX_VALUE))
         );
 
         pack();
@@ -194,6 +215,11 @@ public class JFDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnTest;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
     public void removeMinMaxClose(Component comp) {
         if (comp instanceof AbstractButton) {
@@ -213,4 +239,12 @@ https://stackoverflow.com/questions/1481405/how-to-make-a-jframe-modal-in-swing-
 https://www.java-tips.org/java-se-tips-100019/15-javax-swing/1768-dialog-modality.html
 http://tech.chitgoks.com/2013/05/22/how-to-create-modal-stage-window-from-a-jframe-in-java-fx-2/
 http://tech.chitgoks.com/2013/07/08/how-to-create-confirm-dialog-window-in-java-fx-2/
+
+Table Button Column
+https://tips4java.wordpress.com/2009/07/12/table-button-column/
+https://stackoverflow.com/questions/10347983/making-a-jbutton-clickable-inside-a-jtable
+https://stackoverflow.com/questions/13833688/adding-jbutton-to-jtable
+https://stackoverflow.com/questions/9321623/adding-button-to-jtable
+Have a JButton cell in a JTable
+http://esus.com/jbutton-cell-jtable/
  */

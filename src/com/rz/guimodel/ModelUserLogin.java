@@ -12,6 +12,7 @@ import java.awt.Cursor;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -88,15 +89,27 @@ public class ModelUserLogin {
         }
         System.out.println("DATA_SIZE: " + size);*/
         int rowSize = 0;
+        ModelObserverAdapter.adapterLogInfoMap.put("login_user_id", "-404");
+        ModelObserverAdapter.adapterLogInfoMap.put("login_have_error", "yes");
+        ModelObserverAdapter.adapterLogInfoMap.put("login_message", "<html><font color='red'>Invalid e-mail or password</font></html>");
         try {
             ResultSetMetaData rsmd = resultSet.getMetaData();
             int numberOfColumns = rsmd.getColumnCount();
             System.out.println(" ROW: " + numberOfColumns);
             while (resultSet.next()) {
                 rowSize = resultSet.getInt("total_row");
+                ModelObserverAdapter.adapterLogInfoMap.put("login_user_id", resultSet.getLong("uli_user_id"));
+                //uli_status
+                boolean userStatus = true;
+                userStatus = resultSet.getBoolean("uli_status");
+                if (!userStatus) {
+                    ModelObserverAdapter.adapterLogInfoMap.put("login_message", "<html><font color='red'>Invalid user login</font></html>");
+                    rowSize = 0;
+                }
             }
-        } catch (Exception ex) {
-            System.out.println("EXCEPTION: " + ex.getMessage().toString());
+        } catch (SQLException ex) {
+            System.out.println("EXCEPTION: " + ex.getMessage());
+            ModelObserverAdapter.adapterLogInfoMap.put("login_message", "<html><font color='red'>Database error</font></html>");
         }
         System.out.println("DATA_SIZE: " + rowSize);
         sQLiteConnection.onCloseResultSet(resultSet);
@@ -104,7 +117,10 @@ public class ModelUserLogin {
         sQLiteConnection.onClose();
         if (rowSize == 1) {
             retVal = true;
+            ModelObserverAdapter.adapterLogInfoMap.put("login_have_error", "no");
+            ModelObserverAdapter.adapterLogInfoMap.put("login_message", "<html><font color='black'>Sucessfully loged in</font></html>");
         }
+        //System.out.println("USER_ID: " + ModelObserverAdapter.adapterLogInfoMap.get("login_user_id"));
         return retVal;
     }
 

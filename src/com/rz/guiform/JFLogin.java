@@ -5,6 +5,7 @@
  */
 package com.rz.guiform;
 
+import com.rz.guimodel.ModelObserverAdapter;
 import com.rz.guimodel.ModelUserLogin;
 import com.rz.libraries.MD5MoreSecure;
 import com.rz.libraries.PasswordEncryptionService;
@@ -16,6 +17,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
@@ -109,7 +112,7 @@ public class JFLogin extends JFrame {
                     appTimer = new Timer();
                     appTimer.schedule(new AppMsgTimer(), 0, 1000);
                     //jLblMsg.setText("Invalid e-mail or password");
-                    jLblMsg.setText("<html><font color='red'>Invalid e-mail or password</font></html>");
+                    jLblMsg.setText(ModelObserverAdapter.adapterLogInfoMap.get("login_message").toString());
                 }
             }
         });
@@ -125,6 +128,74 @@ public class JFLogin extends JFrame {
         jBtnExit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jLblForgotPassword.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jLblRegistration.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        /*jTxtEmail.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jTxtEmail.setText("Enter ttt");
+            }
+        });*/
+        jTxtEmail.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                onKeyEventHandler(e, "txt_email");
+            }
+        });
+        jTxtPassword.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                onKeyEventHandler(e, "txt_password");
+            }
+        });
+        jBtnLogin.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                onKeyEventHandler(e, "btn_login");
+            }
+        });
+    }
+
+    private void onKeyEventHandler(KeyEvent e, String argFieldSelf) {
+        if (argFieldSelf.equalsIgnoreCase("txt_email")) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                jTxtPassword.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                jTxtPassword.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                jTxtPassword.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                jBtnLogin.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+                jBtnLogin.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                System.exit(0);
+            }
+        } else if (argFieldSelf.equalsIgnoreCase("txt_password")) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                jBtnLogin.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                jBtnLogin.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                jBtnLogin.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                jTxtEmail.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+                jTxtEmail.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                System.exit(0);
+            }
+        } else if (argFieldSelf.equalsIgnoreCase("btn_login")) {
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                jTxtEmail.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                jTxtEmail.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                jTxtPassword.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+                jTxtPassword.requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                System.exit(0);
+            }
+        }
     }
 
     /**
@@ -374,7 +445,6 @@ public class JFLogin extends JFrame {
         /*public AppMsgTimer() {
             //
         }*/
-
         public void run() {
             //countdown = countdown - 1;
             countdown++;
@@ -385,6 +455,7 @@ public class JFLogin extends JFrame {
                 jLblMsg.setText("<html><font color='black'>Please login</font></html>");
                 appTimer.cancel();
                 appTimer.purge();
+                jTxtEmail.requestFocus();
             }
         }
     }

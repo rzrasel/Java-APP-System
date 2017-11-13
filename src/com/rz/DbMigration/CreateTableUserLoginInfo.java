@@ -32,6 +32,7 @@ public class CreateTableUserLoginInfo {
                 + " uli_identity TEXT NOT NULL,"
                 + " uli_password TEXT NOT NULL,"
                 + " uli_status BOOLEAN NOT NULL,"
+                
                 + " uli_create_date DATETIME NOT NULL,"
                 + " uli_modify_date DATETIME NOT NULL,"
                 + " CONSTRAINT pk_user_login_info_uli_user_id PRIMARY KEY (uli_user_id)"
