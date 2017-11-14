@@ -31,16 +31,18 @@ public class CreateTableAPPProject {
                 + " taap_project_details TEXT NULL,"
                 + " taap_project_package_bundle TEXT NOT NULL,"
                 
+                + " taap_project_release_ver_code TEXT NOT NULL,"
+                + " taap_project_release_ver_name TEXT NOT NULL," //Like release
                 + " taap_project_latest_ver_code TEXT NOT NULL,"
                 + " taap_project_latest_ver_name TEXT NOT NULL," //Like latest is 8.2, and valid latest 6+
+                
                 + " taap_project_lowest_valid_code TEXT NOT NULL,"
                 + " taap_project_lowest_valid_name TEXT NOT NULL," //Like latest is 4, and valid latest 4/<4
-                
                 + " taap_project_status BOOLEAN NOT NULL,"
                 + " taap_project_create_date DATETIME NOT NULL,"
+                
                 + " taap_project_modify_date DATETIME NOT NULL,"
                 + " taap_project_created_by BIGINT(20) NOT NULL,"
-                
                 + " taap_project_modified_by BIGINT(20) NOT NULL,"
                 + " CONSTRAINT pk_app_api_project_taap_project_id PRIMARY KEY (taap_project_id)"
                 + ");";

@@ -50,7 +50,7 @@ public class JFDashboard extends javax.swing.JFrame {
                 jFLogin.dispose();
                 jFLogin.setUndecorated(true);
                 jFLogin.setVisible(true);
-                jFLogin.requestFocus();
+                //jFLogin.requestFocus();
                 //toFront();
                 dispose();
             }
@@ -58,7 +58,8 @@ public class JFDashboard extends javax.swing.JFrame {
         jBtnTest.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFTestFrame jFTestFrame = new JFTestFrame();
+                //JFTestFrame jFTestFrame = new JFTestFrame();
+                JFAppProjects jFTestFrame = new JFAppProjects();
                 jFTestFrame.setLocationRelativeTo(jFDashboard);
                 jFTestFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 jFTestFrame.setResizable(false);
