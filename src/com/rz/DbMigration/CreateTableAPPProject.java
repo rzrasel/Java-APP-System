@@ -38,7 +38,7 @@ public class CreateTableAPPProject {
                 
                 + " taap_project_lowest_valid_code TEXT NOT NULL,"
                 + " taap_project_lowest_valid_name TEXT NOT NULL," //Like latest is 4, and valid latest 4/<4
-                + " taap_project_status BOOLEAN NOT NULL,"
+                + " taap_project_status BOOLEAN NOT NULL," //Active, Inactive Or Published, Unpublished
                 + " taap_project_create_date DATETIME NOT NULL,"
                 
                 + " taap_project_modify_date DATETIME NOT NULL,"

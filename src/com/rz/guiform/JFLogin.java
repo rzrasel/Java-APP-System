@@ -112,7 +112,7 @@ public class JFLogin extends JFrame {
                     appTimer = new Timer();
                     appTimer.schedule(new AppMsgTimer(), 0, 1000);
                     //jLblMsg.setText("Invalid e-mail or password");
-                    jLblMsg.setText(ModelObserverAdapter.adapterLogInfoMap.get("login_message").toString());
+                    jLblMsg.setText(ModelObserverAdapter.adapterSuccessError.get("login_message").toString());
                 }
             }
         });
@@ -452,7 +452,7 @@ public class JFLogin extends JFrame {
             //label.setText(countdown +"second's left");
             if (countdown > 3) {
                 //jLblMsg.setText("Please login");
-                jLblMsg.setText("<html><font color='black'>Please login</font></html>");
+                jLblMsg.setText("<html><font color='#000000'>Please login</font></html>");
                 appTimer.cancel();
                 appTimer.purge();
                 jTxtEmail.requestFocus();

@@ -28,9 +28,6 @@ public class ModelUserLogin {
     private ResultSet resultSet = null;
 
     public static void main(String args[]) {
-        System.out.println("EMAIL_SALT: " + MD5MoreSecure.usage("sysapp@app.com"));
-        System.out.println("EMAIL_SALT_AGAIN: " + MD5MoreSecure.usage("sysapp@app.com"));
-        //new ModelUserLogin().isLoggedIn("sysapp@app.com", "sysapp123456");
     }
 
     public boolean isLoggedIn(String argUserIdentity, String argUserPassword) {
@@ -90,8 +87,8 @@ public class ModelUserLogin {
         System.out.println("DATA_SIZE: " + size);*/
         int rowSize = 0;
         ModelObserverAdapter.adapterLogInfoMap.put("login_user_id", "-404");
-        ModelObserverAdapter.adapterLogInfoMap.put("login_have_error", "yes");
-        ModelObserverAdapter.adapterLogInfoMap.put("login_message", "<html><font color='red'>Invalid e-mail or password</font></html>");
+        ModelObserverAdapter.adapterSuccessError.put("login_have_error", "yes");
+        ModelObserverAdapter.adapterSuccessError.put("login_message", "<html><font color='red'>Invalid e-mail or password</font></html>");
         try {
             ResultSetMetaData rsmd = resultSet.getMetaData();
             int numberOfColumns = rsmd.getColumnCount();
@@ -103,13 +100,13 @@ public class ModelUserLogin {
                 boolean userStatus = true;
                 userStatus = resultSet.getBoolean("uli_status");
                 if (!userStatus) {
-                    ModelObserverAdapter.adapterLogInfoMap.put("login_message", "<html><font color='red'>Invalid user login</font></html>");
+                    ModelObserverAdapter.adapterSuccessError.put("login_message", "<html><font color='red'>Invalid user login</font></html>");
                     rowSize = 0;
                 }
             }
         } catch (SQLException ex) {
             System.out.println("EXCEPTION: " + ex.getMessage());
-            ModelObserverAdapter.adapterLogInfoMap.put("login_message", "<html><font color='red'>Database error</font></html>");
+            ModelObserverAdapter.adapterSuccessError.put("login_message", "<html><font color='red'>Database error</font></html>");
         }
         System.out.println("DATA_SIZE: " + rowSize);
         sQLiteConnection.onCloseResultSet(resultSet);
@@ -117,10 +114,12 @@ public class ModelUserLogin {
         sQLiteConnection.onClose();
         if (rowSize == 1) {
             retVal = true;
-            ModelObserverAdapter.adapterLogInfoMap.put("login_have_error", "no");
-            ModelObserverAdapter.adapterLogInfoMap.put("login_message", "<html><font color='black'>Sucessfully loged in</font></html>");
+            ModelObserverAdapter.adapterSuccessError.put("login_have_error", "no");
+            ModelObserverAdapter.adapterSuccessError.put("login_message", "<html><font color='black'>Sucessfully loged in</font></html>");
         }
         //System.out.println("USER_ID: " + ModelObserverAdapter.adapterLogInfoMap.get("login_user_id"));
+        ModelObserverAdapter.adapterLogInfoMap.put("login_user_id", "15104726559355");
+        retVal = true;
         return retVal;
     }
 

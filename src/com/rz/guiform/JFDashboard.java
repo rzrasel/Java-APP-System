@@ -36,6 +36,7 @@ public class JFDashboard extends javax.swing.JFrame {
         //this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -59,14 +60,15 @@ public class JFDashboard extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //JFTestFrame jFTestFrame = new JFTestFrame();
-                JFAppProjects jFTestFrame = new JFAppProjects();
-                jFTestFrame.setLocationRelativeTo(jFDashboard);
-                jFTestFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                jFTestFrame.setResizable(false);
-                removeMinMaxClose(jFTestFrame);
-                jFTestFrame.addWindowListener(getWindowAdapter(jFTestFrame));
+                JFAppAddProjects jFAppAddProjects = new JFAppAddProjects();
+                jFAppAddProjects.setLocationRelativeTo(jFDashboard);
+                jFAppAddProjects.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                jFAppAddProjects.setResizable(false);
+                //removeMinMaxClose(jFAppAddProjects);
+                jFAppAddProjects.addWindowListener(getWindowAdapter(jFAppAddProjects));
                 //frame.pack();
-                ModalFrameUtil.showAsModal(jFTestFrame, jFDashboard);
+                ModalFrameUtil.showAsModal(jFAppAddProjects, jFDashboard);
+                //jFAppAddProjects.setVisible(true);
                 //jFTestFrame.setLocationRelativeTo(null);
                 //jFDashboard.setEnabled(false);
                 //jFTestFrame.setVisible(true);
@@ -75,7 +77,7 @@ public class JFDashboard extends javax.swing.JFrame {
                 //jFTestFrame.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
                 jFTestFrame.setVisible(true);*/
 
- /*JDialog jd = new JDialog(jFTestFrame);
+                /*JDialog jd = new JDialog(jFTestFrame);
                 jd.setModal(true);
                 jd.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 jd.setLocationByPlatform(true);

@@ -15,4 +15,5 @@ import java.util.HashMap;
 public class ModelObserverAdapter {
     public static ArrayList<ModelDynamic> adapterLogInfoList = new ArrayList<>();
     public static HashMap<String, Object> adapterLogInfoMap = new HashMap<String, Object>();
+    public static HashMap<String, Object> adapterSuccessError = new HashMap<String, Object>();
 }
