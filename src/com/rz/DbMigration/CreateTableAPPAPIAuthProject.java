@@ -13,39 +13,38 @@ import java.sql.Connection;
  *
  * @author Rz Rasel
  */
-public class CreateTableAPPProject {
+public class CreateTableAPPAPIAuthProject {
 
     private static SQLiteConnection sQLiteConnection;
 
     public static void main(String args[]) {
         String tblPrefix = DbConostans.DB_INFO.TBL_PREFIX;
-        String tblName = "app_api_project";
+        String tblName = "appapi_auth_project";
+        String colPrefix = "aaap";
         String sqlQuery = "";
         sQLiteConnection = SQLiteConnection.getInstance(DbConostans.DB_INFO.DB_NAME);
         Connection conn = sQLiteConnection.onOpenConnection();
         sqlQuery = "DROP TABLE IF EXISTS " + tblPrefix + tblName;
         sQLiteConnection.onExecuteQuery(sqlQuery);
-        sqlQuery = "CREATE TABLE IF NOT EXISTS " + tblPrefix + tblName + " ("
-                + " taap_project_id BIGINT(20) NOT NULL,"
-                + " taap_project_name TEXT NOT NULL,"
-                + " taap_project_details TEXT NULL,"
-                + " taap_project_package_bundle TEXT NOT NULL,"
-                
-                + " taap_project_release_ver_code TEXT NOT NULL,"
-                + " taap_project_release_ver_name TEXT NOT NULL," //Like release
-                + " taap_project_latest_ver_code TEXT NOT NULL,"
-                + " taap_project_latest_ver_name TEXT NOT NULL," //Like latest is 8.2, and valid latest 6+
-                
-                + " taap_project_lowest_valid_code TEXT NOT NULL,"
-                + " taap_project_lowest_valid_name TEXT NOT NULL," //Like latest is 4, and valid latest 4/<4
-                + " taap_project_status BOOLEAN NOT NULL," //Active, Inactive Or Published, Unpublished
-                + " taap_project_create_date DATETIME NOT NULL,"
-                
-                + " taap_project_modify_date DATETIME NOT NULL,"
-                + " taap_project_created_by BIGINT(20) NOT NULL,"
-                + " taap_project_modified_by BIGINT(20) NOT NULL,"
-                + " CONSTRAINT pk_app_api_project_taap_project_id PRIMARY KEY (taap_project_id)"
-                + ");";
+        sqlQuery = "CREATE TABLE IF NOT EXISTS " + tblPrefix + tblName + " ( "
+                + colPrefix + "_project_id BIGINT(20) NOT NULL PRIMARY KEY, "
+                + colPrefix + "_project_name TEXT NOT NULL, "
+                + colPrefix + "_project_details TEXT NULL, "
+                + colPrefix + "_project_package_bundle TEXT NOT NULL, "
+                + colPrefix + "_project_release_ver_code TEXT NOT NULL, "
+                + colPrefix + "_project_release_ver_name TEXT NOT NULL, " //Like release
+                + colPrefix + "_project_latest_ver_code TEXT NOT NULL, "
+                + colPrefix + "_project_latest_ver_name TEXT NOT NULL, " //Like latest is 8.2, and valid latest 6+
+
+                + colPrefix + "_project_lowest_valid_code TEXT NOT NULL, "
+                + colPrefix + "_project_lowest_valid_name TEXT NOT NULL, " //Like latest is 4, and valid latest 4/<4
+                + colPrefix + "_project_status BOOLEAN NOT NULL, " //Active, Inactive Or Published, Unpublished
+                + colPrefix + "_project_create_date DATETIME NOT NULL, "
+                + colPrefix + "_project_modify_date DATETIME NOT NULL, "
+                + colPrefix + "_project_created_by BIGINT(20) NOT NULL, "
+                + colPrefix + "_project_modified_by BIGINT(20) NOT NULL "
+                //+ " CONSTRAINT pk_app_api_project_taap_project_id PRIMARY KEY (taap_project_id) "
+                + "); ";
         sQLiteConnection.onExecuteQuery(sqlQuery);
         sQLiteConnection.onClose();
         System.out.println("ID# " + RandomValue.getRandId(1111, 9999));

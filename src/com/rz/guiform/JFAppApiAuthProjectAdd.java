@@ -6,29 +6,33 @@
 package com.rz.guiform;
 
 import com.rz.guimodel.ModelObserverAdapter;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
 
 /**
  *
  * @author Rz Rasel
  */
-public class JFAppAddProjects extends javax.swing.JFrame {
+public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
 
-    public JFAppAddProjects jFAppAddProjects;
+    public JFAppApiAuthProjectAdd jFAppApiAuthProjectAdd;
 
     /**
      * Creates new form JFAppProjects
      */
-    public JFAppAddProjects() {
+    public JFAppApiAuthProjectAdd() {
         initComponents();
-        jFAppAddProjects = this;
+        jFAppApiAuthProjectAdd = this;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ////////////
         //jPanel3.setPreferredSize(new Dimension(640, 50));
@@ -70,14 +74,45 @@ public class JFAppAddProjects extends javax.swing.JFrame {
         jBtnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Pressed", "Error", JOptionPane.ERROR_MESSAGE);
+                //int number = Integer.parseInt(matcher1.group());
+                //Pattern regex = Pattern.compile(".*\\d+.*");
+                //Pattern regex = Pattern.compile("([0-9])");
+                Pattern regex = Pattern.compile("(.)*(\\d)(.)*");
+                Matcher regexMatcher = regex.matcher("Hello This is (78Java) Not (.NET6 66)");
+                if (regexMatcher.find()) {
+                    //System.out.println("Hello " + regexMatcher.group());
+                    //System.out.println("Hello " + regexMatcher.matches());
+                    while (regexMatcher.find()) {
+                        for (int i = 1; i <= regexMatcher.groupCount(); i++) {
+                            // matched text: regexMatcher.group(i)
+                            // match start: regexMatcher.start(i)
+                            // match end: regexMatcher.end(i)
+                            System.out.println("Hello " + regexMatcher.group(i));
+                        }
+                    }
+                }
+                boolean isError = false;
+                Component[] children = jPanelFormOne.getComponents();
+                for (Component item : children) {
+                    if (item instanceof JTextField) {
+                        System.out.println("TEXT_VALUE: " + ((JTextField) item).getName());
+                        if (((JTextField) item).getText().isEmpty() || ((JTextField) item).getText() == null) {
+                            isError = true;
+                            item.setFocusable(true);
+                            //break;
+                        }
+                    }
+                }
+                if (isError) {
+                    JOptionPane.showMessageDialog(jFAppApiAuthProjectAdd, "Required field is empty", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         jBtnClose.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Close Pressed");
-                jFAppAddProjects.dispose();
+                jFAppApiAuthProjectAdd.dispose();
             }
         });
     }
@@ -91,9 +126,9 @@ public class JFAppAddProjects extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanelFormOne = new javax.swing.JPanel();
         jTxtName = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTxtDescription = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -124,7 +159,9 @@ public class JFAppAddProjects extends javax.swing.JFrame {
         setName("JFAppProjects"); // NOI18N
         setResizable(false);
 
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(185, 185, 185), 1, true));
+        jPanelFormOne.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(185, 185, 185), 1, true));
+
+        jTxtName.setName("Name"); // NOI18N
 
         jLabel1.setText("Name:");
 
@@ -148,92 +185,92 @@ public class JFAppAddProjects extends javax.swing.JFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Published", "Unpublished" }));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelFormOneLayout = new javax.swing.GroupLayout(jPanelFormOne);
+        jPanelFormOne.setLayout(jPanelFormOneLayout);
+        jPanelFormOneLayout.setHorizontalGroup(
+            jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFormOneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelFormOneLayout.createSequentialGroup()
+                        .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
                         .addGap(36, 36, 36)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTxtDescription)
                             .addComponent(jTxtName)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanelFormOneLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTxtPackageBundle))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanelFormOneLayout.createSequentialGroup()
+                        .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelFormOneLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(26, 26, 26)
                                 .addComponent(jTxtReleaseCode, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelFormOneLayout.createSequentialGroup()
+                                .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanelFormOneLayout.createSequentialGroup()
+                                        .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel6)
                                             .addComponent(jLabel8))
                                         .addGap(29, 29, 29))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelFormOneLayout.createSequentialGroup()
                                         .addComponent(jLabel10)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTxtLatestCode)
                                     .addComponent(jTxtLowestCode)
                                     .addComponent(jComboBox2, 0, 156, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7)
                             .addComponent(jLabel9))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTxtLatestName)
                             .addComponent(jTxtReleaseName)
                             .addComponent(jTxtLowestName, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanelFormOneLayout.setVerticalGroup(
+            jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFormOneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTxtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtPackageBundle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtReleaseCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel4)
                     .addComponent(jTxtReleaseName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtLatestCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
                     .addComponent(jTxtLatestName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtLowestCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(jTxtLowestName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -302,7 +339,7 @@ public class JFAppAddProjects extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelFormOne, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -311,7 +348,7 @@ public class JFAppAddProjects extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelFormOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -339,21 +376,23 @@ public class JFAppAddProjects extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFAppAddProjects.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFAppApiAuthProjectAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFAppAddProjects.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFAppApiAuthProjectAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFAppAddProjects.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFAppApiAuthProjectAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFAppAddProjects.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFAppApiAuthProjectAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFAppAddProjects().setVisible(true);
+                new JFAppApiAuthProjectAdd().setVisible(true);
             }
         });
     }
@@ -372,9 +411,9 @@ public class JFAppAddProjects extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelFormOne;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableDetails;
     private javax.swing.JTextField jTxtDescription;
@@ -387,4 +426,32 @@ public class JFAppAddProjects extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtReleaseCode;
     private javax.swing.JTextField jTxtReleaseName;
     // End of variables declaration//GEN-END:variables
+
+    /*private void createComponentMap() {
+        componentMap = new HashMap<String, Component>();
+        Component[] components = yourForm.getContentPane().getComponents();
+        for (int i = 0; i < components.length; i++) {
+            componentMap.put(components[i].getName(), components[i]);
+        }
+    }
+
+    public Component getComponentByName(String name) {
+        if (componentMap.containsKey(name)) {
+            return (Component) componentMap.get(name);
+        } else {
+            return null;
+        }
+    }*/
 }
+/*
+buttonA.setNextFocusableComponent(buttonB);
+\stitle="(.*)?"\s*(/>*)
+https://www.jetbrains.com/help/idea/finding-and-replacing-text-in-file-using-regular-expressions.html
+https://stackoverflow.com/questions/24256478/pattern-to-extract-text-between-parenthesis
+https://stackoverflow.com/questions/18590901/check-if-a-string-contains-numbers-java
+
+
+
+https://stackoverflow.com/questions/11666356/how-to-get-regex-matched-group-values
+https://stackoverflow.com/questions/836704/print-regex-matches-in-java
+ */
