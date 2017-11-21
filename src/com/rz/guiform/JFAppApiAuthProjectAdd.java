@@ -77,17 +77,23 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                 //int number = Integer.parseInt(matcher1.group());
                 //Pattern regex = Pattern.compile(".*\\d+.*");
                 //Pattern regex = Pattern.compile("([0-9])");
-                Pattern regex = Pattern.compile("(.)*(\\d)(.)*");
+                //Pattern regex = Pattern.compile("(.)*(\\d)(.)*");
+                String re1="^([+-]?\\d*\\.?\\d*)$";
+                Pattern regex = Pattern.compile("\\d+");
                 Matcher regexMatcher = regex.matcher("Hello This is (78Java) Not (.NET6 66)");
+                while (regexMatcher.find()) {
+                        System.out.println("while: " + regexMatcher.group());
+                }
                 if (regexMatcher.find()) {
                     //System.out.println("Hello " + regexMatcher.group());
                     //System.out.println("Hello " + regexMatcher.matches());
                     while (regexMatcher.find()) {
+                        System.out.println("while " + regexMatcher.group());
                         for (int i = 1; i <= regexMatcher.groupCount(); i++) {
                             // matched text: regexMatcher.group(i)
                             // match start: regexMatcher.start(i)
                             // match end: regexMatcher.end(i)
-                            System.out.println("Hello " + regexMatcher.group(i));
+                            System.out.println("for " + regexMatcher.group(1));
                         }
                     }
                 }
@@ -454,4 +460,12 @@ https://stackoverflow.com/questions/18590901/check-if-a-string-contains-numbers-
 
 https://stackoverflow.com/questions/11666356/how-to-get-regex-matched-group-values
 https://stackoverflow.com/questions/836704/print-regex-matches-in-java
+
+https://stackoverflow.com/questions/6754552/regex-to-find-a-float-probably-a-really-simple-question
+https://stackoverflow.com/questions/13066225/how-to-get-float-value-from-string
+
+https://stackoverflow.com/questions/22652881/get-float-or-integer-value-from-the-string-in-java
+https://stackoverflow.com/questions/12234963/java-searching-float-number-in-string/12235002#12235002
+https://stackoverflow.com/questions/25707779/regex-to-find-integer-or-decimal-from-a-string-in-java-in-a-single-group
+https://stackoverflow.com/questions/12234963/java-searching-float-number-in-string/12235002#12235002
  */
