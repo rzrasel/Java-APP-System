@@ -5,19 +5,32 @@
  */
 package com.rz.guiform;
 
+import com.rz.DbMigration.DbConostans;
 import com.rz.guimodel.ModelObserverAdapter;
+import com.rz.libraries.DBConnection.SQLiteConnection;
+import com.rz.libraries.RandomValue;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -35,6 +48,11 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
         jFAppApiAuthProjectAdd = this;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ////////////
+        /*jCBoxStatus.addItem(new CBoxItem(1, "Published"));
+        jCBoxStatus.addItem(new CBoxItem(0, "Unpublished"));
+        jCBoxStatus.setMaximumRowCount(2);
+        jCBoxStatus.setPrototypeDisplayValue(" None of the above ");*/
+        ////////////
         //jPanel3.setPreferredSize(new Dimension(640, 50));
         System.out.println("USER_ID: " + ModelObserverAdapter.adapterLogInfoMap.get("login_user_id"));
         ////////////
@@ -44,6 +62,14 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
         tableColumn0.setMaxWidth(0);
         tableColumn0.setPreferredWidth(0);
         ////////////
+        jTxtName.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    jBtnSave.doClick();
+                }
+            }
+        });
         jTxtReleaseCode.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
@@ -74,43 +100,134 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
         jBtnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //int number = Integer.parseInt(matcher1.group());
-                //Pattern regex = Pattern.compile(".*\\d+.*");
-                //Pattern regex = Pattern.compile("([0-9])");
-                //Pattern regex = Pattern.compile("(.)*(\\d)(.)*");
-                String re1="^([+-]?\\d*\\.?\\d*)$";
-                Pattern regex = Pattern.compile("\\d+");
-                Matcher regexMatcher = regex.matcher("Hello This is (78Java) Not (.NET6 66)");
-                while (regexMatcher.find()) {
-                        System.out.println("while: " + regexMatcher.group());
+                /*ArrayList<FormFieldMeta> arrayList = new ArrayList<FormFieldMeta>();
+                arrayList.add(new FormFieldMeta(1, "Name_1"));
+                arrayList.add(new FormFieldMeta(5, "Name_5"));
+                arrayList.add(new FormFieldMeta(2, "Name_2"));
+                Collections.sort(arrayList);
+
+                for (FormFieldMeta str : arrayList) {
+                    System.out.println(str.serial + " - " + str.name);
                 }
+                String firstname = "Hello This is (78Java) Not (.NET6 66)";
+                new FieldMeta().onIntRegexMatcher("Hello This is (78Java) Not (.NET6 66)");
+                firstname = firstname.replaceAll("[^A-Za-z]", "");
+                //firstname = firstname.replaceAll("^([0-9]+)", "");
+                firstname = firstname.replaceAll("\\d+", "");
+                System.out.println(firstname);*/
+                //
+                Pattern regex = Pattern.compile("^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)+$");
+                //a.replaceAll("\\s+","");
+                Matcher regexMatcher = regex.matcher("com.abc.texr");
                 if (regexMatcher.find()) {
-                    //System.out.println("Hello " + regexMatcher.group());
-                    //System.out.println("Hello " + regexMatcher.matches());
-                    while (regexMatcher.find()) {
-                        System.out.println("while " + regexMatcher.group());
-                        for (int i = 1; i <= regexMatcher.groupCount(); i++) {
-                            // matched text: regexMatcher.group(i)
-                            // match start: regexMatcher.start(i)
-                            // match end: regexMatcher.end(i)
-                            System.out.println("for " + regexMatcher.group(1));
-                        }
-                    }
+                    System.out.println("Valid_PACKAGE");
+                } else {
+                    System.out.println("inValid_PACKAGE");
                 }
+                ////
+                ArrayList<FormFieldMeta> formFieldMetas = new ArrayList<FormFieldMeta>();
+                FormFieldMeta regexFound = new FormFieldMeta();
+                int serial = -1;
                 boolean isError = false;
                 Component[] children = jPanelFormOne.getComponents();
                 for (Component item : children) {
                     if (item instanceof JTextField) {
                         System.out.println("TEXT_VALUE: " + ((JTextField) item).getName());
-                        if (((JTextField) item).getText().isEmpty() || ((JTextField) item).getText() == null) {
-                            isError = true;
-                            item.setFocusable(true);
+                        /*if (((JTextField) item).getText().isEmpty() || ((JTextField) item).getText() == null) {
+                            //isError = true;
+                            //item.setFocusable(true);
                             //break;
+                            String componentName = ((JTextField) item).getName();
+                            serial = regexFound.onIntRegexMatcher(componentName);
+                            String name = componentName.replaceAll("[^A-Za-z]", "");
+                            formFieldMetas.add(new FormFieldMeta(serial, name, item));
+                        }*/
+                        if (((JTextField) item).getName() != null) {
+                            String componentName = ((JTextField) item).getName();
+                            serial = regexFound.onIntRegexMatcher(componentName);
+                            String name = componentName.replaceAll("[^A-Za-z]", "");
+                            String value = ((JTextField) item).getText().trim();
+                            value = value.replaceAll("\\s+"," ");
+                            formFieldMetas.add(new FormFieldMeta(serial, name, item, value));
                         }
+                    } else if (item instanceof JComboBox) {
+                        String componentName = ((JComboBox) item).getName();
+                        serial = regexFound.onIntRegexMatcher(componentName);
+                        String name = componentName.replaceAll("[^A-Za-z]", "");
+                        String value = String.valueOf(((JComboBox) item).getSelectedItem());
+                        if (value.equalsIgnoreCase("Published")) {
+                            value = "1";
+                        } else {
+                            value = "0";
+                        }
+                        formFieldMetas.add(new FormFieldMeta(serial, name, item, value));
                     }
+                }
+                Collections.sort(formFieldMetas);
+                FormFieldMeta errorField = null;
+                for (FormFieldMeta item : formFieldMetas) {
+                    System.out.println(item.serial + " - " + item.name);
+                    if (item.value.isEmpty() || item.value == null) {
+                        errorField = item;
+                        isError = true;
+                        break;
+                    }
+                }
+                if (errorField != null) {
+                    Component component = errorField.component;
+                    component.requestFocus();
                 }
                 if (isError) {
                     JOptionPane.showMessageDialog(jFAppApiAuthProjectAdd, "Required field is empty", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+                    Date now = new Date();
+                    String strDate = sdfDate.format(now);
+                    String tblPrefix = DbConostans.DB_INFO.TBL_PREFIX;
+                    String tblName = "appapi_auth_project";
+                    String sqlQuery = "";
+                    String authProjectId = RandomValue.getRandId(1111, 9999);
+                    String userId = "15104726559355";
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (FormFieldMeta item : formFieldMetas) {
+                        stringBuilder.append("'");
+                        stringBuilder.append(item.value);
+                        stringBuilder.append("', ");
+                    }
+                    System.out.println("SQL: " + stringBuilder.toString());
+                    sqlQuery = "INSERT INTO " + tblPrefix + tblName + " VALUES ("
+                            + "'" + authProjectId + "', "
+                            + stringBuilder.toString()
+                            + "'" + strDate + "', "
+                            + "'" + strDate + "', "
+                            + "'" + userId + "', "
+                            + "'" + userId + "' "
+                            + ");";
+                    SQLiteConnection sQLiteConnection;
+                    sQLiteConnection = SQLiteConnection.getInstance(DbConostans.DB_INFO.DB_NAME);
+                    Connection conn = sQLiteConnection.onOpenConnection();
+                    sQLiteConnection.onExecuteRawQuery(sqlQuery);
+                    sQLiteConnection.onCloseStatement();
+                    sQLiteConnection.onClose();
+                    //void clearAll(Container aContainer)
+                    for (FormFieldMeta item : formFieldMetas) {
+                        Component component = item.component;
+                        if (component instanceof JTextField || component instanceof JTextArea) {
+                            ((JTextComponent) component).setText("");
+                        }
+                        /*else if (component instanceof JRadioButton) {
+                            ((JRadioButton) component).setSelected(false);
+                        } else if (component instanceof JDateChooser) {
+                            ((JDateChooser) component).setDate(null);
+                        } else if (component instanceof Container) {
+                            //clearAll((Container) component);
+                        }*/
+                    }
+                    formFieldMetas.get(0).component.requestFocus();
+                    //https://stackoverflow.com/questions/35554467/how-to-clear-all-the-component-values-in-a-jframe-on-clicking-jbutton
+                    //http://www.java2s.com/Tutorials/Java/Swing_How_to/JComboBox/Store_key_value_pair_in_JComboBox.htm
+                    //https://stackoverflow.com/questions/5205339/regular-expression-matching-fully-qualified-class-names
+                    JOptionPane.showMessageDialog(jFAppApiAuthProjectAdd, "Sucesfully inserted", "Error", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -152,7 +269,7 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
         jTxtLowestName = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jCBoxStatus = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableDetails = new javax.swing.JTable();
@@ -167,29 +284,46 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
 
         jPanelFormOne.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(185, 185, 185), 1, true));
 
-        jTxtName.setName("Name"); // NOI18N
+        jTxtName.setName("Name1"); // NOI18N
 
         jLabel1.setText("Name:");
 
         jLabel2.setText("Description:");
 
+        jTxtDescription.setName("Description2"); // NOI18N
+
         jLabel3.setText("Package Bundle:");
+
+        jTxtPackageBundle.setName("Package Bundle 3"); // NOI18N
 
         jLabel4.setText("Release Code:");
 
+        jTxtReleaseCode.setName("Release Code 4"); // NOI18N
+
         jLabel5.setText("Release Name:");
+
+        jTxtReleaseName.setName("Release Name 5"); // NOI18N
 
         jLabel6.setText("Latest Code:");
 
+        jTxtLatestCode.setName("Latest Code 6"); // NOI18N
+
         jLabel7.setText("Latest Name:");
 
+        jTxtLatestName.setName("Latest Name 7"); // NOI18N
+
         jLabel8.setText("Lowest Code:");
+
+        jTxtLowestCode.setName("Lowest Code 8"); // NOI18N
+
+        jTxtLowestName.setName("Lowest Name 9"); // NOI18N
 
         jLabel9.setText("Lowest Name:");
 
         jLabel10.setText("Status:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Published", "Unpublished" }));
+        jCBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Published", "Unpublished" }));
+        jCBoxStatus.setName("Status 10"); // NOI18N
 
         javax.swing.GroupLayout jPanelFormOneLayout = new javax.swing.GroupLayout(jPanelFormOne);
         jPanelFormOne.setLayout(jPanelFormOneLayout);
@@ -229,7 +363,7 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                                 .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTxtLatestCode)
                                     .addComponent(jTxtLowestCode)
-                                    .addComponent(jComboBox2, 0, 156, Short.MAX_VALUE))))
+                                    .addComponent(jCBoxStatus, 0, 156, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -278,7 +412,7 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(jPanelFormOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -406,7 +540,7 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnClose;
     private javax.swing.JButton jBtnSave;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jCBoxStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -448,7 +582,19 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
             return null;
         }
     }*/
+    public class CBoxItem {
+
+        private int id;
+        private String description;
+
+        public CBoxItem(int id, String description) {
+            this.id = id;
+            this.description = description;
+        }
+    }
 }
+
+
 /*
 buttonA.setNextFocusableComponent(buttonB);
 \stitle="(.*)?"\s*(/>*)
@@ -468,4 +614,9 @@ https://stackoverflow.com/questions/22652881/get-float-or-integer-value-from-the
 https://stackoverflow.com/questions/12234963/java-searching-float-number-in-string/12235002#12235002
 https://stackoverflow.com/questions/25707779/regex-to-find-integer-or-decimal-from-a-string-in-java-in-a-single-group
 https://stackoverflow.com/questions/12234963/java-searching-float-number-in-string/12235002#12235002
+
+
+([a-z][a-z_0-9]*\.)*[A-Z_]($[A-Z_]|[\w_])*
+^[a-z][a-z0-9_]*(\.[a-z0-9_]+)+$
+(\\w+\\.?)+
  */

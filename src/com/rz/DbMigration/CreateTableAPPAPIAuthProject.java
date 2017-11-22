@@ -31,6 +31,7 @@ public class CreateTableAPPAPIAuthProject {
                 + colPrefix + "_project_name TEXT NOT NULL, "
                 + colPrefix + "_project_details TEXT NULL, "
                 + colPrefix + "_project_package_bundle TEXT NOT NULL, "
+                
                 + colPrefix + "_project_release_ver_code TEXT NOT NULL, "
                 + colPrefix + "_project_release_ver_name TEXT NOT NULL, " //Like release
                 + colPrefix + "_project_latest_ver_code TEXT NOT NULL, "
@@ -40,6 +41,7 @@ public class CreateTableAPPAPIAuthProject {
                 + colPrefix + "_project_lowest_valid_name TEXT NOT NULL, " //Like latest is 4, and valid latest 4/<4
                 + colPrefix + "_project_status BOOLEAN NOT NULL, " //Active, Inactive Or Published, Unpublished
                 + colPrefix + "_project_create_date DATETIME NOT NULL, "
+                
                 + colPrefix + "_project_modify_date DATETIME NOT NULL, "
                 + colPrefix + "_project_created_by BIGINT(20) NOT NULL, "
                 + colPrefix + "_project_modified_by BIGINT(20) NOT NULL "

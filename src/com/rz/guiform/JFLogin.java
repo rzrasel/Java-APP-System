@@ -157,7 +157,8 @@ public class JFLogin extends JFrame {
     private void onKeyEventHandler(KeyEvent e, String argFieldSelf) {
         if (argFieldSelf.equalsIgnoreCase("txt_email")) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                jTxtPassword.requestFocus();
+                //jTxtPassword.requestFocus();
+                jBtnLogin.doClick();
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                 jTxtPassword.requestFocus();
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {

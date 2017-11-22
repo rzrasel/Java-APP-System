@@ -109,7 +109,7 @@
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="jTxtLatestCode" max="32767" attributes="0"/>
                                       <Component id="jTxtLowestCode" max="32767" attributes="0"/>
-                                      <Component id="jComboBox2" alignment="0" pref="156" max="32767" attributes="0"/>
+                                      <Component id="jCBoxStatus" alignment="0" pref="156" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -173,7 +173,7 @@
                   <EmptySpace pref="14" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jCBoxStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -183,7 +183,7 @@
       <SubComponents>
         <Component class="javax.swing.JTextField" name="jTxtName">
           <Properties>
-            <Property name="name" type="java.lang.String" value="Name" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="Name1" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -197,6 +197,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtDescription">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Description2" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -204,6 +207,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtPackageBundle">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Package Bundle 3" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -211,6 +217,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtReleaseCode">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Release Code 4" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -218,6 +227,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtReleaseName">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Release Name 5" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
@@ -225,6 +237,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtLatestCode">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Latest Code 6" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
@@ -232,6 +247,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtLatestName">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Latest Name 7" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
@@ -239,8 +257,14 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtLowestCode">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Lowest Code 8" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtLowestName">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Lowest Name 9" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
           <Properties>
@@ -252,7 +276,7 @@
             <Property name="text" type="java.lang.String" value="Status:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox2">
+        <Component class="javax.swing.JComboBox" name="jCBoxStatus">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="2">
@@ -260,6 +284,7 @@
                 <StringItem index="1" value="Unpublished"/>
               </StringArray>
             </Property>
+            <Property name="name" type="java.lang.String" value="Status 10" noResource="true"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
