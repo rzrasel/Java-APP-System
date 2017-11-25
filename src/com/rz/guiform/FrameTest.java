@@ -5,7 +5,7 @@
  */
 package com.rz.guiform;
 
-import com.rz.libraries.AeSimpleSHA1;
+import com.rz.librarycore.cryption.AeSimpleSHA1;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;

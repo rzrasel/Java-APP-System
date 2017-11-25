@@ -5,9 +5,9 @@
  */
 package com.rz.guimodel;
 
-import com.rz.DbMigration.DbConostans;
-import com.rz.libraries.DBConnection.SQLiteConnection;
-import com.rz.libraries.MD5MoreSecure;
+import com.rz.librarycore.cryption.MD5MoreSecure;
+import com.rz.librarycore.dbhandler.SQLiteConnection;
+import com.rz.librarycore.dbmigration.DbConostans;
 import java.awt.Cursor;
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.rz.libraries;
+package com.rz.librarycore.cryption;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

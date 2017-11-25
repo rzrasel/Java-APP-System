@@ -5,10 +5,10 @@
  */
 package com.rz.guiform;
 
-import com.rz.DbMigration.DbConostans;
+import com.rz.librarycore.dbmigration.DbConostans;
 import com.rz.guimodel.ModelObserverAdapter;
-import com.rz.libraries.DBConnection.SQLiteConnection;
-import com.rz.libraries.RandomValue;
+import com.rz.librarycore.RandomValue;
+import com.rz.librarycore.dbhandler.SQLiteConnection;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;

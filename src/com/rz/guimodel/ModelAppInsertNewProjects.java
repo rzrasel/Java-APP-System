@@ -5,7 +5,7 @@
  */
 package com.rz.guimodel;
 
-import com.rz.libraries.DBConnection.SQLiteConnection;
+import com.rz.librarycore.dbhandler.SQLiteConnection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 

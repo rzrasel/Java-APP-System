@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.rz.DbMigration;
+package com.rz.librarycore.dbmigration;
 
-import com.rz.libraries.DBConnection.SQLiteConnection;
-import com.rz.libraries.RandomValue;
+import com.rz.librarycore.RandomValue;
+import com.rz.librarycore.dbhandler.SQLiteConnection;
 import java.sql.Connection;
 
 /**

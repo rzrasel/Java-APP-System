@@ -7,9 +7,9 @@ package com.rz.guiform;
 
 import com.rz.guimodel.ModelObserverAdapter;
 import com.rz.guimodel.ModelUserLogin;
-import com.rz.libraries.MD5MoreSecure;
-import com.rz.libraries.PasswordEncryptionService;
-import com.rz.libraries.RandomValue;
+import com.rz.librarycore.cryption.MD5MoreSecure;
+import com.rz.librarycore.cryption.PasswordEncryptionService;
+import com.rz.librarycore.RandomValue;
 import java.awt.Cursor;
 import java.awt.Dialog;
 import java.awt.GraphicsDevice;
