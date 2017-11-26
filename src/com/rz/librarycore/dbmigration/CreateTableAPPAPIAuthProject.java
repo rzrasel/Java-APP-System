@@ -30,7 +30,7 @@ public class CreateTableAPPAPIAuthProject {
                 + colPrefix + "_project_id BIGINT(20) NOT NULL PRIMARY KEY, "
                 + colPrefix + "_project_name TEXT NOT NULL, "
                 + colPrefix + "_project_details TEXT NULL, "
-                + colPrefix + "_project_package_bundle TEXT NOT NULL, "
+                + colPrefix + "_project_package_bundle TEXT NOT NULL UNIQUE, "
                 
                 + colPrefix + "_project_release_ver_code TEXT NOT NULL, "
                 + colPrefix + "_project_release_ver_name TEXT NOT NULL, " //Like release
