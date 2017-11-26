@@ -17,10 +17,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JComboBox;
@@ -29,6 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.text.JTextComponent;
 
@@ -61,6 +66,17 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
         tableColumn0.setMinWidth(0);
         tableColumn0.setMaxWidth(0);
         tableColumn0.setPreferredWidth(0);
+        TableColumn tableColumn1 = jTableDetails.getColumnModel().getColumn(1);
+        tableColumn1.setMinWidth(26);
+        tableColumn1.setMaxWidth(26);
+        tableColumn1.setPreferredWidth(26);
+        TableColumn tableColumn4 = jTableDetails.getColumnModel().getColumn(4);
+        tableColumn4.setMinWidth(20);
+        tableColumn4.setMaxWidth(20);
+        tableColumn4.setPreferredWidth(20);
+        String tblPrefix = DbConostans.DB_INFO.TBL_PREFIX;
+        String tblName = tblPrefix + "appapi_auth_project";
+        onPopulateTable("SELECT * FROM " + tblName + " ORDER BY aaap_project_name ASC ");
         ////////////
         jTxtName.addKeyListener(new KeyAdapter() {
             @Override
@@ -115,15 +131,6 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                 //firstname = firstname.replaceAll("^([0-9]+)", "");
                 firstname = firstname.replaceAll("\\d+", "");
                 System.out.println(firstname);*/
-                //
-                Pattern regex = Pattern.compile("^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)+$");
-                //a.replaceAll("\\s+","");
-                Matcher regexMatcher = regex.matcher("com.abc.texr");
-                if (regexMatcher.find()) {
-                    System.out.println("Valid_PACKAGE");
-                } else {
-                    System.out.println("inValid_PACKAGE");
-                }
                 ////
                 ArrayList<FormFieldMeta> formFieldMetas = new ArrayList<FormFieldMeta>();
                 FormFieldMeta regexFound = new FormFieldMeta();
@@ -147,7 +154,7 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                             serial = regexFound.onIntRegexMatcher(componentName);
                             String name = componentName.replaceAll("[^A-Za-z]", "");
                             String value = ((JTextField) item).getText().trim();
-                            value = value.replaceAll("\\s+"," ");
+                            value = value.replaceAll("\\s+", " ");
                             formFieldMetas.add(new FormFieldMeta(serial, name, item, value));
                         }
                     } else if (item instanceof JComboBox) {
@@ -238,6 +245,56 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                 jFAppApiAuthProjectAdd.dispose();
             }
         });
+    }
+
+    public void onPopulateTable(String argSqlQuery) {
+        SQLiteConnection sQLiteConnection;
+        Connection connection = null;
+        Statement statement = null;
+        String DbName = "SQLiteDbAppApiWordpress.sqlite3";
+        //String argSqlQuery = "";
+        HashMap<String, Object> mapDbTableData = new HashMap<String, Object>();
+        
+        
+        sQLiteConnection = SQLiteConnection.getInstance(DbConostans.DB_INFO.DB_NAME);
+        Connection conn = sQLiteConnection.onOpenConnection();
+        System.out.println("SQL_QUERY: " + argSqlQuery);
+        ResultSet resultSet = sQLiteConnection.onSqlQuery(argSqlQuery);
+        try {
+            //resultSet.beforeFirst();
+            if (resultSet != null) {
+                DefaultTableModel tableModel = (DefaultTableModel) jTableDetails.getModel();
+                tableModel.setRowCount(0);
+                int rowCounter = 0;
+                while (resultSet.next()) {
+                    //System.out.println(resultSet.getInt(1) + "  " + resultSet.getString("tap_name"));
+                    long rowId = resultSet.getLong("aaap_project_id");
+                    String rowName = resultSet.getString("aaap_project_name");
+                    /*String tapDirectoryName = resultSet.getString("tap_directory_name");
+                    String tapCreateDate = resultSet.getString("tap_create_date");
+                    String tapModifyDate = resultSet.getString("tap_modify_date");
+                    long tapCreatedBy = resultSet.getLong("tap_created_by");
+                    long tapModifiedBy = resultSet.getLong("tap_modified_by");*/
+                    String rowPackage = resultSet.getString("aaap_project_package_bundle");
+                    String rowStatus = resultSet.getString("aaap_project_status");
+                    String rowRelease = resultSet.getString("aaap_project_release_ver_name");
+                    String rowLatest = resultSet.getString("aaap_project_latest_ver_name");
+                    String rowLowest = resultSet.getString("aaap_project_lowest_valid_name");
+                    rowCounter++;
+                    Object[] tblRow = {rowId, rowCounter, rowName, rowPackage, rowStatus, rowRelease, rowLatest, rowLowest, };
+                    tableModel.addRow(tblRow);
+                }
+                tableModel.fireTableDataChanged();
+            }
+            sQLiteConnection.onCloseResultSet(resultSet);
+            //sQLiteConnection.onCloseStatement();
+            //sQLiteConnection.onClose();
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.toString());
+        }
+        if (sQLiteConnection != null) {
+            sQLiteConnection.onClose();
+        }
     }
 
     /**
@@ -423,7 +480,7 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Name", "Package", "Status", "Release", "Latest", "Lowest"
+                "ID", "Sl", "Name", "Package", "Status", "Release", "Latest", "Lowest"
             }
         ));
         jScrollPane1.setViewportView(jTableDetails);
@@ -513,16 +570,24 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFAppApiAuthProjectAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFAppApiAuthProjectAdd.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFAppApiAuthProjectAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFAppApiAuthProjectAdd.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFAppApiAuthProjectAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFAppApiAuthProjectAdd.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFAppApiAuthProjectAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFAppApiAuthProjectAdd.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
