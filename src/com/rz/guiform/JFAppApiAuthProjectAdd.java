@@ -7,6 +7,7 @@ package com.rz.guiform;
 
 import com.rz.conostans.APPConostans;
 import com.rz.dbmigration.DbConostans;
+import com.rz.guimodel.ModelAppApiAuthProjectAdd;
 import com.rz.guimodel.ModelObserverAdapter;
 import com.rz.librarycore.RandomValue;
 import com.rz.librarycore.dbhandler.SQLiteConnection;
@@ -251,21 +252,22 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
     }
 
     public void onPopulateTable(String argSqlQuery) {
-        String tblPrefix = APPConostans.DATABASE.TABLE.PREFIX;
-        String tblName = tblPrefix + APPConostans.DATABASE.TABLE.TBL_AUTH_PROJECT;
-        String colPrefix = APPConostans.DATABASE.TABLE.COL_AUTH_PROJECT;
-        SQLiteConnection sQLiteConnection;
-        Connection connection = null;
-        Statement statement = null;
-        String DbName = "SQLiteDbAppApiWordpress.sqlite3";
-        //String argSqlQuery = "";
-        HashMap<String, Object> mapDbTableData = new HashMap<String, Object>();
-
-        sQLiteConnection = SQLiteConnection.getInstance(APPConostans.DATABASE.NAME);
-        Connection conn = sQLiteConnection.onOpenConnection();
-        System.out.println("SQL_QUERY: " + argSqlQuery);
-        ResultSet resultSet = sQLiteConnection.onSqlQuery(argSqlQuery);
-        try {
+        ModelAppApiAuthProjectAdd modelAppApiAuthProjectAdd = new ModelAppApiAuthProjectAdd();
+        ArrayList<HashMap<String, String>> dbResultSet = new ArrayList<HashMap<String, String>>();
+        dbResultSet = modelAppApiAuthProjectAdd.onPopulateTable(argSqlQuery);
+        System.out.println("SIZE: " + dbResultSet.size());
+        if (dbResultSet.size() > 0) {
+            DefaultTableModel tableModel = (DefaultTableModel) jTableDetails.getModel();
+            //tableModel.setRowCount(0);
+            int counter = 0;
+            for (HashMap<String, String> itemsTop : dbResultSet) {
+                counter++;
+                Object[] tblRow = itemsTop.values().toArray();
+                tableModel.addRow(tblRow);
+            }
+            tableModel.fireTableDataChanged();
+        }
+        /*try {
             //resultSet.beforeFirst();
             if (resultSet != null) {
                 DefaultTableModel tableModel = (DefaultTableModel) jTableDetails.getModel();
@@ -279,7 +281,7 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                     String tapCreateDate = resultSet.getString("tap_create_date");
                     String tapModifyDate = resultSet.getString("tap_modify_date");
                     long tapCreatedBy = resultSet.getLong("tap_created_by");
-                    long tapModifiedBy = resultSet.getLong("tap_modified_by");*/
+                    long tapModifiedBy = resultSet.getLong("tap_modified_by");*--/
                     String rowPackage = resultSet.getString(colPrefix + "_project_package_bundle");
                     String rowStatus = resultSet.getString(colPrefix + "_project_status");
                     String rowRelease = resultSet.getString(colPrefix + "_project_release_ver_name");
@@ -296,10 +298,15 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
             //sQLiteConnection.onClose();
         } catch (SQLException e) {
             System.out.println("SQLException: " + e.toString());
+        }*/
+ /*
+        hashMap.keySet().toArray(); // returns an array of keys
+        hashMap.values().toArray(); // returns an array of values
+        for(Entry<String, String> e : m.entrySet()) {
+        String key = e.getKey();
+        String value = e.getValue();
         }
-        if (sQLiteConnection != null) {
-            sQLiteConnection.onClose();
-        }
+         */
     }
 
     /**
