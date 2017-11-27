@@ -5,7 +5,8 @@
  */
 package com.rz.guiform;
 
-import com.rz.librarycore.dbmigration.DbConostans;
+import com.rz.conostans.APPConostans;
+import com.rz.dbmigration.DbConostans;
 import com.rz.guimodel.ModelObserverAdapter;
 import com.rz.librarycore.RandomValue;
 import com.rz.librarycore.dbhandler.SQLiteConnection;
@@ -74,9 +75,10 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
         tableColumn4.setMinWidth(20);
         tableColumn4.setMaxWidth(20);
         tableColumn4.setPreferredWidth(20);
-        String tblPrefix = DbConostans.DB_INFO.TBL_PREFIX;
-        String tblName = tblPrefix + "appapi_auth_project";
-        onPopulateTable("SELECT * FROM " + tblName + " ORDER BY aaap_project_name ASC ");
+        String tblPrefix = APPConostans.DATABASE.TABLE.PREFIX;
+        String tblName = tblPrefix + APPConostans.DATABASE.TABLE.TBL_AUTH_PROJECT;
+        String colPrefix = APPConostans.DATABASE.TABLE.COL_AUTH_PROJECT;
+        onPopulateTable("SELECT * FROM " + tblName + " ORDER BY " + colPrefix + "_project_name ASC ");
         ////////////
         jTxtName.addKeyListener(new KeyAdapter() {
             @Override
@@ -190,8 +192,9 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                     SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
                     Date now = new Date();
                     String strDate = sdfDate.format(now);
-                    String tblPrefix = DbConostans.DB_INFO.TBL_PREFIX;
-                    String tblName = "appapi_auth_project";
+                    String tblPrefix = APPConostans.DATABASE.TABLE.PREFIX;
+                    String tblName = tblPrefix + APPConostans.DATABASE.TABLE.TBL_AUTH_PROJECT;
+                    String colPrefix = APPConostans.DATABASE.TABLE.COL_AUTH_PROJECT;
                     String sqlQuery = "";
                     String authProjectId = RandomValue.getRandId(1111, 9999);
                     String userId = "15104726559355";
@@ -248,15 +251,17 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
     }
 
     public void onPopulateTable(String argSqlQuery) {
+        String tblPrefix = APPConostans.DATABASE.TABLE.PREFIX;
+        String tblName = tblPrefix + APPConostans.DATABASE.TABLE.TBL_AUTH_PROJECT;
+        String colPrefix = APPConostans.DATABASE.TABLE.COL_AUTH_PROJECT;
         SQLiteConnection sQLiteConnection;
         Connection connection = null;
         Statement statement = null;
         String DbName = "SQLiteDbAppApiWordpress.sqlite3";
         //String argSqlQuery = "";
         HashMap<String, Object> mapDbTableData = new HashMap<String, Object>();
-        
-        
-        sQLiteConnection = SQLiteConnection.getInstance(DbConostans.DB_INFO.DB_NAME);
+
+        sQLiteConnection = SQLiteConnection.getInstance(APPConostans.DATABASE.NAME);
         Connection conn = sQLiteConnection.onOpenConnection();
         System.out.println("SQL_QUERY: " + argSqlQuery);
         ResultSet resultSet = sQLiteConnection.onSqlQuery(argSqlQuery);
@@ -268,20 +273,20 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                 int rowCounter = 0;
                 while (resultSet.next()) {
                     //System.out.println(resultSet.getInt(1) + "  " + resultSet.getString("tap_name"));
-                    long rowId = resultSet.getLong("aaap_project_id");
-                    String rowName = resultSet.getString("aaap_project_name");
+                    long rowId = resultSet.getLong(colPrefix + "_project_id");
+                    String rowName = resultSet.getString(colPrefix + "_project_name");
                     /*String tapDirectoryName = resultSet.getString("tap_directory_name");
                     String tapCreateDate = resultSet.getString("tap_create_date");
                     String tapModifyDate = resultSet.getString("tap_modify_date");
                     long tapCreatedBy = resultSet.getLong("tap_created_by");
                     long tapModifiedBy = resultSet.getLong("tap_modified_by");*/
-                    String rowPackage = resultSet.getString("aaap_project_package_bundle");
-                    String rowStatus = resultSet.getString("aaap_project_status");
-                    String rowRelease = resultSet.getString("aaap_project_release_ver_name");
-                    String rowLatest = resultSet.getString("aaap_project_latest_ver_name");
-                    String rowLowest = resultSet.getString("aaap_project_lowest_valid_name");
+                    String rowPackage = resultSet.getString(colPrefix + "_project_package_bundle");
+                    String rowStatus = resultSet.getString(colPrefix + "_project_status");
+                    String rowRelease = resultSet.getString(colPrefix + "_project_release_ver_name");
+                    String rowLatest = resultSet.getString(colPrefix + "_project_latest_ver_name");
+                    String rowLowest = resultSet.getString(colPrefix + "_project_lowest_valid_name");
                     rowCounter++;
-                    Object[] tblRow = {rowId, rowCounter, rowName, rowPackage, rowStatus, rowRelease, rowLatest, rowLowest, };
+                    Object[] tblRow = {rowId, rowCounter, rowName, rowPackage, rowStatus, rowRelease, rowLatest, rowLowest,};
                     tableModel.addRow(tblRow);
                 }
                 tableModel.fireTableDataChanged();

@@ -5,9 +5,10 @@
  */
 package com.rz.guimodel;
 
+import com.rz.conostans.APPConostans;
 import com.rz.librarycore.cryption.MD5MoreSecure;
 import com.rz.librarycore.dbhandler.SQLiteConnection;
-import com.rz.librarycore.dbmigration.DbConostans;
+import com.rz.dbmigration.DbConostans;
 import java.awt.Cursor;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -59,16 +60,17 @@ public class ModelUserLogin {
         String cryptedPassword = MD5MoreSecure.getCryption(argUserPassword);
         System.out.println("EMAIL_SALT: " + cryptedIdentity);
         System.out.println("PASS_SALT_AGAIN: " + cryptedPassword);
-        String tblPrefix = DbConostans.DB_INFO.TBL_PREFIX;
-        String tblName = "user_login_info";
+        String tblPrefix = APPConostans.DATABASE.TABLE.PREFIX;
+        String tblName = APPConostans.DATABASE.TABLE.TBL_LOGIN_IFO;
+        String colPrefix = APPConostans.DATABASE.TABLE.COL_LOGIN_IFO;
         String sqlQuery = "";
         sqlQuery = "SELECT COUNT(*) AS total_row, * FROM " + tblPrefix + tblName
                 + " WHERE "
-                + " uli_identity = '" + cryptedIdentity + "'"
-                + " AND uli_password = '" + cryptedPassword + "'"
+                + colPrefix + "_identity = '" + cryptedIdentity + "'"
+                + " AND " + colPrefix + "_password = '" + cryptedPassword + "'"
                 + ";";
         System.out.println("SQL_QUERY: " + sqlQuery);
-        sQLiteConnection = SQLiteConnection.getInstance(DbConostans.DB_INFO.DB_NAME);
+        sQLiteConnection = SQLiteConnection.getInstance(APPConostans.DATABASE.NAME);
         Connection conn = sQLiteConnection.onOpenConnection();
         resultSet = sQLiteConnection.onSqlQuery(sqlQuery);
         //Cursor cursor = null;
@@ -95,10 +97,10 @@ public class ModelUserLogin {
             System.out.println(" ROW: " + numberOfColumns);
             while (resultSet.next()) {
                 rowSize = resultSet.getInt("total_row");
-                ModelObserverAdapter.adapterLogInfoMap.put("login_user_id", resultSet.getLong("uli_user_id"));
+                ModelObserverAdapter.adapterLogInfoMap.put("login_user_id", resultSet.getLong(colPrefix + "_user_id"));
                 //uli_status
                 boolean userStatus = true;
-                userStatus = resultSet.getBoolean("uli_status");
+                userStatus = resultSet.getBoolean(colPrefix + "_status");
                 if (!userStatus) {
                     ModelObserverAdapter.adapterSuccessError.put("login_message", "<html><font color='red'>Invalid user login</font></html>");
                     rowSize = 0;

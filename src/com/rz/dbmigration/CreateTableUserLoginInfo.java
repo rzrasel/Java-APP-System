@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.rz.librarycore.dbmigration;
+package com.rz.dbmigration;
 
+import com.rz.conostans.APPConostans;
 import com.rz.librarycore.RandomValue;
 import com.rz.librarycore.dbhandler.SQLiteConnection;
 import java.sql.Connection;
@@ -20,22 +21,22 @@ public class CreateTableUserLoginInfo {
     private static SQLiteConnection sQLiteConnection;
 
     public static void main(String args[]) {
-        String tblPrefix = DbConostans.DB_INFO.TBL_PREFIX;
-        String tblName = "user_login_info";
+        String tblPrefix = APPConostans.DATABASE.TABLE.PREFIX;
+        String tblName = APPConostans.DATABASE.TABLE.TBL_LOGIN_IFO;
+        String colPrefix = APPConostans.DATABASE.TABLE.COL_LOGIN_IFO;
         String sqlQuery = "";
-        sQLiteConnection = SQLiteConnection.getInstance(DbConostans.DB_INFO.DB_NAME);
+        sQLiteConnection = SQLiteConnection.getInstance(APPConostans.DATABASE.NAME);
         Connection conn = sQLiteConnection.onOpenConnection();
         sqlQuery = "DROP TABLE IF EXISTS " + tblPrefix + tblName;
         sQLiteConnection.onExecuteQuery(sqlQuery);
         sqlQuery = "CREATE TABLE IF NOT EXISTS " + tblPrefix + tblName + " ("
-                + " uli_user_id BIGINT(20) NOT NULL,"
-                + " uli_identity TEXT NOT NULL,"
-                + " uli_password TEXT NOT NULL,"
-                + " uli_status BOOLEAN NOT NULL,"
-                
-                + " uli_create_date DATETIME NOT NULL,"
-                + " uli_modify_date DATETIME NOT NULL,"
-                + " CONSTRAINT pk_user_login_info_uli_user_id PRIMARY KEY (uli_user_id)"
+                + colPrefix + "_user_id BIGINT(20) NOT NULL  PRIMARY KEY,"
+                + colPrefix + "_identity TEXT NOT NULL,"
+                + colPrefix + "_password TEXT NOT NULL,"
+                + colPrefix + "_status BOOLEAN NOT NULL,"
+                + colPrefix + "_create_date DATETIME NOT NULL,"
+                + colPrefix + "_modify_date DATETIME NOT NULL,"
+                //+ " CONSTRAINT pk_user_login_info_uli_user_id PRIMARY KEY (uli_user_id)"
                 + ");";
         sQLiteConnection.onExecuteQuery(sqlQuery);
         String userId = RandomValue.getRandId(1111, 9999);

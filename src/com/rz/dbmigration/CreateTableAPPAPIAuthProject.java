@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.rz.librarycore.dbmigration;
+package com.rz.dbmigration;
 
+import com.rz.conostans.APPConostans;
 import com.rz.librarycore.RandomValue;
 import com.rz.librarycore.dbhandler.SQLiteConnection;
 import java.sql.Connection;
@@ -18,17 +19,17 @@ public class CreateTableAPPAPIAuthProject {
     private static SQLiteConnection sQLiteConnection;
 
     public static void main(String args[]) {
-        String tblPrefix = DbConostans.DB_INFO.TBL_PREFIX;
-        String tblName = "appapi_auth_project";
-        String colPrefix = "aaap";
+        String tblPrefix = APPConostans.DATABASE.TABLE.PREFIX;
+        String tblName = APPConostans.DATABASE.TABLE.TBL_AUTH_PROJECT;
+        String colPrefix = APPConostans.DATABASE.TABLE.COL_AUTH_PROJECT;
         String sqlQuery = "";
-        sQLiteConnection = SQLiteConnection.getInstance(DbConostans.DB_INFO.DB_NAME);
+        sQLiteConnection = SQLiteConnection.getInstance(APPConostans.DATABASE.NAME);
         Connection conn = sQLiteConnection.onOpenConnection();
         sqlQuery = "DROP TABLE IF EXISTS " + tblPrefix + tblName;
         sQLiteConnection.onExecuteQuery(sqlQuery);
         sqlQuery = "CREATE TABLE IF NOT EXISTS " + tblPrefix + tblName + " ( "
                 + colPrefix + "_project_id BIGINT(20) NOT NULL PRIMARY KEY, "
-                + colPrefix + "_project_name TEXT NOT NULL, "
+                + colPrefix + "_project_name TEXT NOT NULL  UNIQUE, "
                 + colPrefix + "_project_details TEXT NULL, "
                 + colPrefix + "_project_package_bundle TEXT NOT NULL UNIQUE, "
                 

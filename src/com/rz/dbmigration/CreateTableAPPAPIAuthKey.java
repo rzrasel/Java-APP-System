@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.rz.librarycore.dbmigration;
+package com.rz.dbmigration;
 
+import com.rz.conostans.APPConostans;
 import com.rz.librarycore.dbhandler.SQLiteConnection;
 import java.sql.Connection;
 
@@ -17,11 +18,11 @@ public class CreateTableAPPAPIAuthKey {
     private static SQLiteConnection sQLiteConnection;
 
     public static void main(String args[]) {
-        String tblPrefix = DbConostans.DB_INFO.TBL_PREFIX;
-        String tblName = "appapi_auth_key";
-        String colPrefix = "aaak";
+        String tblPrefix = APPConostans.DATABASE.TABLE.PREFIX;
+        String tblName = APPConostans.DATABASE.TABLE.TBL_AUTH_KEY;
+        String colPrefix = APPConostans.DATABASE.TABLE.COL_AUTH_KEY;
         String sqlQuery = "";
-        sQLiteConnection = SQLiteConnection.getInstance(DbConostans.DB_INFO.DB_NAME);
+        sQLiteConnection = SQLiteConnection.getInstance(APPConostans.DATABASE.NAME);
         Connection conn = sQLiteConnection.onOpenConnection();
         sqlQuery = "DROP TABLE IF EXISTS " + tblPrefix + tblName;
         sQLiteConnection.onExecuteQuery(sqlQuery);

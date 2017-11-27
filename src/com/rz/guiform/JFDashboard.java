@@ -60,14 +60,14 @@ public class JFDashboard extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //JFTestFrame jFTestFrame = new JFTestFrame();
-                JFAppApiAuthProjectAdd jFAppApiAuthProjectAdd = new JFAppApiAuthProjectAdd();
-                jFAppApiAuthProjectAdd.setLocationRelativeTo(jFDashboard);
-                jFAppApiAuthProjectAdd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                jFAppApiAuthProjectAdd.setResizable(false);
+                JFAppApiAuthKeyAdd jFAppApiAuthKeyAdd = new JFAppApiAuthKeyAdd();
+                jFAppApiAuthKeyAdd.setLocationRelativeTo(jFDashboard);
+                jFAppApiAuthKeyAdd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                jFAppApiAuthKeyAdd.setResizable(false);
                 //removeMinMaxClose(jFAppAddProjects);
-                jFAppApiAuthProjectAdd.addWindowListener(getWindowAdapter(jFAppApiAuthProjectAdd));
+                jFAppApiAuthKeyAdd.addWindowListener(getWindowAdapter(jFAppApiAuthKeyAdd));
                 //frame.pack();
-                ModalFrameUtil.showAsModal(jFAppApiAuthProjectAdd, jFDashboard);
+                ModalFrameUtil.showAsModal(jFAppApiAuthKeyAdd, jFDashboard);
                 //jFAppAddProjects.setVisible(true);
                 //jFTestFrame.setLocationRelativeTo(null);
                 //jFDashboard.setEnabled(false);
