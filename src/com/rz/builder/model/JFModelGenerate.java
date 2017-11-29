@@ -55,6 +55,13 @@ public class JFModelGenerate extends javax.swing.JFrame {
             }
         });
         /////////////
+        jBtnClose.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        /////////////
     }
 
     public void onAddTableBlankRow() {
@@ -84,20 +91,27 @@ public class JFModelGenerate extends javax.swing.JFrame {
         for (int rowCount = 0; rowCount < tableModel.getRowCount(); rowCount++) {
             ArrayList<String> dataItems = new ArrayList<String>();
             int row = rowCount;
-            for (int columnCount = 0; columnCount < tableModel.getColumnCount(); columnCount++) {
+            /*for (int columnCount = 0; columnCount < tableModel.getColumnCount(); columnCount++) {
                 int column = columnCount;
                 String rowValue = tableModel.getValueAt(row, column).toString();
                 //System.out.println("VALUE: " + rowValue);
                 if (columnCount > 0) {
                     dataItems.add(rowValue);
                 }
+            }*/
+            String rowValueTitle = tableModel.getValueAt(row, 1).toString().trim();
+            String rowValueType = tableModel.getValueAt(row, 2).toString().trim();
+            if (!rowValueTitle.isEmpty() && !rowValueType.isEmpty()) {
+                dataItems.add(rowValueTitle);
+                dataItems.add(rowValueType);
+                modelData.add(dataItems);
             }
-            modelData.add(dataItems);
+            //modelData.add(dataItems);
         }
         Collections.sort(modelData, new Comparator<ArrayList<String>>() {
             @Override
             public int compare(ArrayList<String> argItem1, ArrayList<String> argItem2) {
-                return argItem1.get(0).compareTo(argItem2.get(0));
+                return argItem1.get(0).toLowerCase().compareTo(argItem2.get(0).toLowerCase());
                 /*String value1 = String.valueOf(argItem1.toArray()[0]);
                 String value2 = String.valueOf(argItem2.toArray()[0]);
                 return value1.compareTo(value2);*/
@@ -105,14 +119,65 @@ public class JFModelGenerate extends javax.swing.JFrame {
         });
         System.out.println("VALUE: " + modelData.toString());
         //OnFileWrite fileWriter = new OnFileWrite();
-        onGenerate(jTextName.getText(), modelData);
+        if (!jTextName.getText().isEmpty() && modelData.size() > 0) {
+            onGenerate(jTextName.getText(), modelData);
+        }
     }
 
     public void onGenerate(String argClassName, ArrayList<ArrayList<String>> argCodeData) {
         String retVal = "";
         retVal += "public class " + argClassName + " {";
         retVal += "\n";
-        retVal += argCodeData.toString();
+        //retVal += argCodeData.toString();
+        String varString = "";
+        String methodDesc = "";
+        String methodToString = "";
+        String toStringVal = "";
+        int counter = 0;
+        for (ArrayList<String> items : argCodeData) {
+            counter++;
+            String methodName = "";
+            String varName = items.get(0);
+            String varType = items.get(1);
+            ////////////
+            varString += "private " + varType + " " + varName + ";";
+            varString += "\n";
+            ////////////
+            methodName = varName.substring(0, 1).toUpperCase() + varName.substring(1);
+            methodDesc += "public " + varType + " " + "get" + methodName + "() {";
+            methodDesc += "\n";
+            methodDesc += "return this." + varName + ";";
+            methodDesc += "\n";
+            methodDesc += "}";
+            methodDesc += "\n";
+            ////////////
+            String param = "";
+            param = varName.substring(0, 1).toUpperCase() + varName.substring(1);
+            methodDesc += "public void " + " " + "set" + methodName + "(" + varType + " " + "arg" + param + ") {";
+            methodDesc += "\n";
+            methodDesc += "this." + varName + " = arg" + param + ";";
+            methodDesc += "\n";
+            methodDesc += "}";
+            methodDesc += "\n";
+            ////////////
+            toStringVal += "this." + varName + " ";
+            if (counter < items.size()) {
+                toStringVal += "+ ";
+            }
+            ////////////
+        }
+        retVal += varString;
+        retVal += methodDesc;
+        ////////////
+        methodToString += "public String toString() {";
+        methodToString += "\n";
+        methodToString += "return \"STRING_VALUE_OF_THE_" + argClassName.toUpperCase() + ": \" ";
+        methodToString += "+ " + toStringVal.trim() + ";";
+        methodToString += "\n";
+        methodToString += "}";
+        methodToString += "\n";
+        ////////////
+        retVal += methodToString;
         retVal += "\n";
         retVal += "}";
         OnFileWrite.onWrite(argClassName + ".java", retVal);
@@ -304,7 +369,9 @@ public class JFModelGenerate extends javax.swing.JFrame {
     private javax.swing.JTable jTableProperty;
     private javax.swing.JTextField jTextName;
     // End of variables declaration//GEN-END:variables
+
 }
+
 /*
 http://www.java2s.com/Code/Java/Swing-JFC/UsingaJComboBoxinaCellinaJTableComponent.htm
  */
