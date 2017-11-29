@@ -6,7 +6,6 @@
 package com.rz.guiform;
 
 import com.rz.conostans.APPConostans;
-import com.rz.dbmigration.DbConostans;
 import com.rz.guimodel.ModelAppApiAuthProjectAdd;
 import com.rz.guimodel.ModelObserverAdapter;
 import com.rz.librarycore.RandomValue;
@@ -24,6 +23,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -76,10 +76,11 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
         tableColumn4.setMinWidth(20);
         tableColumn4.setMaxWidth(20);
         tableColumn4.setPreferredWidth(20);
+        ////////////
         String tblPrefix = APPConostans.DATABASE.TABLE.PREFIX;
-        String tblName = tblPrefix + APPConostans.DATABASE.TABLE.TBL_AUTH_PROJECT;
+        String tblName = APPConostans.DATABASE.TABLE.TBL_AUTH_PROJECT;
         String colPrefix = APPConostans.DATABASE.TABLE.COL_AUTH_PROJECT;
-        onPopulateTable("SELECT * FROM " + tblName + " ORDER BY " + colPrefix + "_project_name ASC ");
+        onPopulateTable("SELECT * FROM " + tblPrefix + tblName + " ORDER BY " + colPrefix + "_project_name ASC ");
         ////////////
         jTxtName.addKeyListener(new KeyAdapter() {
             @Override
@@ -194,7 +195,7 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                     Date now = new Date();
                     String strDate = sdfDate.format(now);
                     String tblPrefix = APPConostans.DATABASE.TABLE.PREFIX;
-                    String tblName = tblPrefix + APPConostans.DATABASE.TABLE.TBL_AUTH_PROJECT;
+                    String tblName = APPConostans.DATABASE.TABLE.TBL_AUTH_PROJECT;
                     String colPrefix = APPConostans.DATABASE.TABLE.COL_AUTH_PROJECT;
                     String sqlQuery = "";
                     String authProjectId = RandomValue.getRandId(1111, 9999);
@@ -215,7 +216,7 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                             + "'" + userId + "' "
                             + ");";
                     SQLiteConnection sQLiteConnection;
-                    sQLiteConnection = SQLiteConnection.getInstance(DbConostans.DB_INFO.DB_NAME);
+                    sQLiteConnection = SQLiteConnection.getInstance(APPConostans.DATABASE.NAME);
                     Connection conn = sQLiteConnection.onOpenConnection();
                     sQLiteConnection.onExecuteRawQuery(sqlQuery);
                     sQLiteConnection.onCloseStatement();
@@ -238,7 +239,13 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                     //https://stackoverflow.com/questions/35554467/how-to-clear-all-the-component-values-in-a-jframe-on-clicking-jbutton
                     //http://www.java2s.com/Tutorials/Java/Swing_How_to/JComboBox/Store_key_value_pair_in_JComboBox.htm
                     //https://stackoverflow.com/questions/5205339/regular-expression-matching-fully-qualified-class-names
-                    JOptionPane.showMessageDialog(jFAppApiAuthProjectAdd, "Sucesfully inserted", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(jFAppApiAuthProjectAdd, "Sucesfully inserted", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    ////////////
+                    /*String tblPrefix = APPConostans.DATABASE.TABLE.PREFIX;
+                    String tblName = tblPrefix + APPConostans.DATABASE.TABLE.TBL_AUTH_PROJECT;
+                    String colPrefix = APPConostans.DATABASE.TABLE.COL_AUTH_PROJECT;*/
+                    onPopulateTable("SELECT * FROM " + tblPrefix + tblName + " ORDER BY " + colPrefix + "_project_name ASC ");
+                    ////////////
                 }
             }
         });
@@ -253,6 +260,23 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
 
     public void onPopulateTable(String argSqlQuery) {
         ModelAppApiAuthProjectAdd modelAppApiAuthProjectAdd = new ModelAppApiAuthProjectAdd();
+        ArrayList<ArrayList<String>> dbResultSet = new ArrayList<ArrayList<String>>();
+        dbResultSet = modelAppApiAuthProjectAdd.onPopulateTable(argSqlQuery);
+        System.out.println("SIZE: " + dbResultSet.size());
+        if (dbResultSet.size() > 0) {
+            DefaultTableModel tableModel = (DefaultTableModel) jTableDetails.getModel();
+            tableModel.setRowCount(0);
+            int counter = 0;
+            for (ArrayList<String> itemsTop : dbResultSet) {
+                counter++;
+                Object[] tblRow = itemsTop.toArray();
+                System.out.println("ROW_VALUE: " + Arrays.toString(tblRow));
+                tableModel.addRow(tblRow);
+            }
+            tableModel.fireTableDataChanged();
+        }
+        /*ModelAppApiAuthProjectAdd modelAppApiAuthProjectAdd = new ModelAppApiAuthProjectAdd();
+        //ArrayList<HashMap<String, String>> dbResultSet = new ArrayList<HashMap<String, String>>();
         ArrayList<HashMap<String, String>> dbResultSet = new ArrayList<HashMap<String, String>>();
         dbResultSet = modelAppApiAuthProjectAdd.onPopulateTable(argSqlQuery);
         System.out.println("SIZE: " + dbResultSet.size());
@@ -263,11 +287,12 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
             for (HashMap<String, String> itemsTop : dbResultSet) {
                 counter++;
                 Object[] tblRow = itemsTop.values().toArray();
+                System.out.println("ROW_VALUE: " + Arrays.toString(tblRow));
                 tableModel.addRow(tblRow);
             }
             tableModel.fireTableDataChanged();
-        }
-        /*try {
+        }*/
+ /*try {
             //resultSet.beforeFirst();
             if (resultSet != null) {
                 DefaultTableModel tableModel = (DefaultTableModel) jTableDetails.getModel();
@@ -495,6 +520,8 @@ public class JFAppApiAuthProjectAdd extends javax.swing.JFrame {
                 "ID", "Sl", "Name", "Package", "Status", "Release", "Latest", "Lowest"
             }
         ));
+        jTableDetails.setGridColor(new java.awt.Color(185, 185, 185));
+        jTableDetails.setShowGrid(true);
         jScrollPane1.setViewportView(jTableDetails);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

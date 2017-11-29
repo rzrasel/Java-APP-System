@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,16 +23,16 @@ import java.util.regex.Pattern;
  *
  * @author Rz Rasel
  */
-public class FileWrite {
+public class OnFileWrite {
 
     public static void main(String args[]) {
-        FieldValidator fieldValidator = new FieldValidator();
+        /*FieldValidator fieldValidator = new FieldValidator();
         fieldValidator.isNumberNP("-900001");
         RegexPattern.onExtractRealNumbers("as-+dfs-90df.fadd56sdf.adfasdf3455");
         StringBuilder sbuf = new StringBuilder();
         Formatter fmt = new Formatter(sbuf);
         fmt.format("PI = %f%n", Math.PI);
-        System.out.print(sbuf.toString());
+        System.out.print(sbuf.toString());*/
         onWrite("Test.txt", "Test Data");
     }
 
@@ -49,11 +50,11 @@ public class FileWrite {
             bufferedWriter = new BufferedWriter(outputStreamWriter);
             bufferedWriter.write(argData);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileWrite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OnFileWrite.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(FileWrite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OnFileWrite.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(FileWrite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OnFileWrite.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 /*if (fileOutputStream != null) {
@@ -66,7 +67,7 @@ public class FileWrite {
                     bufferedWriter.close();
                 }
             } catch (IOException ex) {
-                Logger.getLogger(FileWrite.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(OnFileWrite.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
