@@ -5,7 +5,11 @@
  */
 package com.rz.builder.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -20,11 +24,51 @@ public class SqlTableBuilder {
     private SqlStringBuilder sqlStringBuilder;
 
     public static void main(String args[]) {
-        HashMap<String, String> tblColVal = new HashMap<String, String>();
-        tblColVal.put("key", "value");
-        tblColVal.put("kone", "one");
-        SqlTableBuilder sqlTableBuilder = new SqlTableBuilder();
-        sqlTableBuilder.onCreateAuthProject();
+        HashMap<String, String> mapTblColVal = new HashMap<String, String>();
+        mapTblColVal.put("key", "value");
+        mapTblColVal.put("kone", "one");
+        List<String> keyList = new ArrayList<String>(mapTblColVal.keySet());
+        Set<String> keySet = mapTblColVal.keySet();
+        System.out.println("DEBUG_PRINT:\n" + keyList);
+        System.out.println("DEBUG_PRINT:\n" + keySet);
+        /*for (Map.Entry<String, String> e : mapTblColVal.entrySet()) {
+            //to get key
+            e.getKey();
+            //and to get value
+            e.getValue();
+        }
+        for (String key : mapTblColVal.keyset()) {
+            //list.add(key + "|" + map.get(key));
+        }*/
+ /*Iterator<Map.Entry<Integer, Integer>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer, Integer> pair = it.next();
+            i += pair.getKey() + pair.getValue();
+        }
+        Iterator<Integer> itr2 = map.keySet().iterator();
+        while (itr2.hasNext()) {
+            Integer key = itr2.next();
+            i += key + map.get(key);
+        }*/
+        //SqlTableBuilder sqlTableBuilder = new SqlTableBuilder();
+        //sqlTableBuilder.onCreateAuthProject();
+        /*Iterator entries = myMap.entrySet().iterator();
+        while (entries.hasNext()) {
+            Entry thisEntry = (Entry) entries.next();
+            Object key = thisEntry.getKey();
+            Object value = thisEntry.getValue();
+            // ...
+        }*/
+        /*for (Map.Entry entry : hm.entrySet()) {
+            System.out.print("key,val: ");
+            System.out.println(entry.getKey() + "," + entry.getValue());
+        }
+        Iterator iter = hm.keySet().iterator();
+        while (iter.hasNext()) {
+            Integer key = (Integer) iter.next();
+            String val = (String) hm.get(key);
+            System.out.println("key,val: " + key + "," + val);
+        }*/
     }
 
     public void onCreateAuthProject() {
