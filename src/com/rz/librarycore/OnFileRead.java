@@ -26,6 +26,7 @@ public class OnFileRead {
         fileData = onRead("test.txt");
         System.out.println("DEBUG_PRINT:" + fileData);
         Matcher regexMatcher;
+        //(?is)\b(?:from|into|update)\s+(\w+)
         Pattern pattern = Pattern.compile("(?i)\\b(?:exists|from|join)\\s+([a-zA-Z0-9_$#-]*\\.?\\s*(?:[a-zA-Z0-9_]+)*)");
         regexMatcher = pattern.matcher(fileData);
         while (regexMatcher.find()) {
