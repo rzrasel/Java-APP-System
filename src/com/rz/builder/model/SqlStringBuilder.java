@@ -62,7 +62,7 @@ public class SqlStringBuilder {
 
     public String onCreateTable(String argTableName, String argSql, String argColPrefix) {
         String retVal = "";
-        String completeSql = "CREATE TABLE %s (\n%s\n);";
+        String completeSql = "CREATE TABLE IF NOT EXISTS %s (\n%s\n);";
         String originalSql = argSql.replaceAll("[\\s|\n]+", " ");
         //|----|add space in between table name and first bracket
         originalSql = originalSql.replace(argTableName + "(", argTableName + " (");
@@ -70,6 +70,8 @@ public class SqlStringBuilder {
         String generatedSql = "";
         String modifiedSql = "";
         String createStatement = String.format("CREATE TABLE %s \\(", argTableName);
+        modifiedSql = originalSql.replaceAll("(?i)" + createStatement, "").trim();
+        createStatement = String.format("CREATE TABLE IF NOT EXISTS %s \\(", argTableName);
         modifiedSql = originalSql.replaceAll("(?i)" + createStatement, "").trim();
         modifiedSql = modifiedSql.replace(");", "").trim();
         //System.out.println("DEBUG_PRINT:\n" + modifiedSql);

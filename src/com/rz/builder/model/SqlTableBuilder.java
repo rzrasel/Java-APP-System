@@ -5,6 +5,8 @@
  */
 package com.rz.builder.model;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Rz Rasel
@@ -18,6 +20,9 @@ public class SqlTableBuilder {
     private SqlStringBuilder sqlStringBuilder;
 
     public static void main(String args[]) {
+        HashMap<String, String> tblColVal = new HashMap<String, String>();
+        tblColVal.put("key", "value");
+        tblColVal.put("kone", "one");
         SqlTableBuilder sqlTableBuilder = new SqlTableBuilder();
         sqlTableBuilder.onCreateAuthProject();
     }
@@ -53,8 +58,8 @@ public class SqlTableBuilder {
         System.out.println("DEBUG_PRINT:\n" + sqlQuery);
         //////////////////////
         colPrefix = "";
-        sqlQuery = "CREATE TABLE appapi_auth_project (\n"
-                + "aaap_CREATE TABLE IF NOT EXISTS appapi_auth_project (project_id BIGINT(20) NOT NULL PRIMARY KEY,\n"
+        sqlQuery = "CREATE TABLE IF NOT EXISTS appapi_auth_project (\n"
+                + "aaap_project_id BIGINT(20) NOT NULL PRIMARY KEY,\n"
                 + "aaap_project_name TEXT NOT NULL UNIQUE,\n"
                 + "aaap_project_details TEXT NULL,\n"
                 + "aaap_project_package_bundle TEXT NOT NULL UNIQUE,\n"
