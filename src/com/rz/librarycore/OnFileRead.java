@@ -55,7 +55,12 @@ public class OnFileRead {
             Logger.getLogger(OnFileRead.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
-                bufferedReader.close();
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+                if (fileReader != null) {
+                    fileReader.close();
+                }
             } catch (IOException ex) {
                 Logger.getLogger(OnFileRead.class.getName()).log(Level.SEVERE, null, ex);
             }

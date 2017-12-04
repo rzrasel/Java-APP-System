@@ -161,3 +161,10 @@ public class SqlTableBuilder {
         System.out.println("DEBUG_PRINT:\n" + sqlQuery);
     }
 }
+/*
+RegEx to extract the table name from a SQL script file
+https://stackoverflow.com/questions/30223057/regex-to-extract-the-table-name-from-a-sql-script-file
+Regular Expression to retrieve column and tables from SQL statement
+https://stackoverflow.com/questions/20285940/regular-expression-to-retrieve-column-and-tables-from-sql-statement
+
+*/
