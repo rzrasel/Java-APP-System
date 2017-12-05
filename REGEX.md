@@ -31,6 +31,8 @@ The (?!...) part means "only match if the text following
 (hence: lookahead) this doesn't (hence: negative) match this.
 But it doesn't actually consume the characters it matches (hence: zero-width).
 
+<span class="sort" data-sort="name">Sort names</span>
+
 * There are actually 4 combinations of lookarounds with 2 axes:
     - lookbehind / lookahead : specifies if the characters before or after the point are considered
     - positive / negative : specifies if the characters must match or must not match.
