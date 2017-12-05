@@ -136,6 +136,125 @@ Group 2 = 123.45
 
 Notice, I also changed the last part of the regex from \.[0-9]* to \.[0-9]+. This would prevent a match on 123. i.e. numbers without a decimal part but still having a dot.
 
+http://www.ocpsoft.org/opensource/guide-to-regular-expressions-in-java-part-1/
+
+https://www.regular-expressions.info/java.html
+
+https://beginnersbook.com/2014/08/java-regex-tutorial/
+
+#### Java Regex find/replace pattern in SQL comments
+```
+try {
+    Pattern regex = Pattern.compile("(?:/\\*[^;]*?\\*/)|(?:--[^;]*?$)", Pattern.DOTALL | Pattern.MULTILINE);
+    Matcher regexMatcher = regex.matcher(subjectString);
+    while (regexMatcher.find()) {
+        // matched text: regexMatcher.group()
+        // match start: regexMatcher.start()
+        // match end: regexMatcher.end()
+    } 
+} catch (PatternSyntaxException ex) {
+    // Syntax error in the regular expression
+}
+```
+Single Line: \\-\\-[^;]*(;) -- not sure the best way to find multiple ; within a line
+
+Multi-line: /\\*[^;(\\*/)]*?(;)[^;]*?\\*/ -- something like this anyway
+#### Java Regex find Oracle Single Line comments Except in a String
+https://stackoverflow.com/questions/8446064/java-regex-find-oracle-single-line-comments-except-in-a-string
+```
+Matcher m = Pattern.compile("(?m)^(?:(?!--|').|'(?:''|[^'])*')*(--.*)$").matcher(sql);
+while(m.find()) {
+  System.out.println(m.group(1));
+}
+```
+
+#### Java regex to remove SQL comments from a string
+https://stackoverflow.com/questions/10225923/java-regex-to-remove-sql-comments-from-a-string
+```
+mySb = mySb.replaceAll("/\\*.*?\\*/", "");
+```
+```
+Pattern commentPattern = Pattern.compile("/\\*.*?\\*/", Pattern.DOTALL);
+mySb = commentPattern.matcher(mySb).replaceAll("");
+```
+
+#### What does (?m) mean at the beginning of a regex
+
+    REGEX = (?m)^(.)SessionId=\w+(\w{4}[&"].)$
+
+What does the (?m) mean before the caret? Is this really matching 0 or 1 "m" characters at the end of the previous line, or does it have some special meaning?
+
+It declares the regex to read multiline data, i.e., don't stop the regex on a line break.
+
+The (?<option_flag>) construct allows you to set various matching properties like case-insensitivity, multiline, greedy, etc. See http://www.regextester.com/pregsyntax.html for more info.
+
+#### What does (?m:\s*) mean in Regex jargon?
+
+
+
+What would this mean in an expression?
+
+(?m:.*?)
+
+or this
+
+(?m:\s*)
+
+I mean, it appears to be something to do with whitespace but I'm unsure.
+
+ADDITIONAL DETAILS:
+The full expression I'm looking at is:
+
+\A((?m:\s*)((\/\*(?m:.*?)\*\/)|(\#\#\# (?m:.*?)\#\#\#)|(\/\/ .* \n?)+|(\# .* \n?)+))+
+
+
+#### Ans
+(?...) is a way of applying modifiers to the regular expression inside the parentheses.
+
+(?:...) allows you to treat the part between the parentheses as a group, without affecting the set of strings captured by the matching engine. But you can add option letters between the ? and the :, in which case the part of the regular expression between the parentheses behaves as if you had included those option letters when creating the regular expression. That is, /(?m:...)/ behaves the same as /.../m.
+https://stackoverflow.com/questions/12265325/what-does-m-s-mean-in-regex-jargon
+Pattern .*? will match any string, but as short string as possible, as there is a lazy operator ?.
+
+Pattern \s* will match white-space characters (zero of more).
+
+(?m) enables "multi-line mode". In this mode, the caret and dollar match before and after newlines in the subject string. To apply this mode to some sub-pattern only, sytax (?m:...) is used, where ... is a matching pattern.
+
+#### What does (?ms) in Regex mean?
+[regex]$regex = 
+@'
+(?ms).*?<DIV class=row>.*?
+'@
+
+#### Ans
+(?m) is the modifier for multi-line mode. It makes ^ and $ match the beginning and end of a line, respectively, instead of matching the beginning and end of the input.
+
+For example, given the input:
+
+    ABC DEF
+    GHI
+
+The regex ^[A-Z]{3} will match:
+
+        "ABC"
+
+Meanwhile, the regex (?m)^[A-Z]{3} will match:
+
+        "ABC"
+        "GHI"
+
+(?s) is the modifier for single-line mode. It adds linebreaks and newlines to the list of characters that . will match.
+
+Given the same input as before, the regex [A-Z]{3}. will match (note the inclusion of the space character):
+
+        "ABC "
+
+While the regex (?s)[A-Z]{3}. will match:
+
+        "ABC "
+        "DEF\n"
+
+Despite their names, the two modes aren't necessarily mutually exclusive. In some implementations they cancel out, but, for the most part, they can be used in concert. You can use both at once by writing (?m)(?s) or, in shorter form, (?ms).
+https://stackoverflow.com/questions/27680097/what-does-ms-in-regex-mean
 
 | END |
 |-----|
