@@ -30,8 +30,12 @@ You can use a zero-width negative lookahead, however:
 The (?!...) part means "only match if the text following
 (hence: lookahead) this doesn't (hence: negative) match this.
 But it doesn't actually consume the characters it matches (hence: zero-width).
-<br />
-There are actually 4 combinations of lookarounds with 2 axes:
-<br />
-lookbehind / lookahead : specifies if the characters before or after the point are considered
-positive / negative : specifies if the characters must match or must not match.
+
+* There are actually 4 combinations of lookarounds with 2 axes:
+    - lookbehind / lookahead : specifies if the characters before or after the point are considered
+    - positive / negative : specifies if the characters must match or must not match.
+* you can usually use some workaround on one of the forms
+    - [^abc], which is anything but abc,
+    - or negative lookahead: a(?!b), which is a not followed by b
+    - or negative lookbehind: (?<!a)b, which is b not preceeded by a
+
