@@ -4,8 +4,7 @@ Regex
 |   DATE    | TOPICS |
 |-----------|--------|
 | 2017-12-05| Regex |
-|-----------|--------|
-<br />
+
 #### Lookahead and Lookbehind Zero-Length Assertions
 * <a  target="_blank" href="http://www.regular-expressions.info/lookaround.html">Lookahead and Lookbehind Zero-Length Assertions</a>
 
