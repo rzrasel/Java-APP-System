@@ -117,4 +117,21 @@ public class RegexPattern {
         return str;
         //"aaabcd+ ".replaceFirst("\\+$", ""));
     }
+
+    public String onGetSqlTableName(String str) {
+        String tableName = "";
+        //Matcher regexMatcher;
+        //(?is)\b(?:from|into|update)\s+(\w+)
+        //Pattern pattern = Pattern.compile("(?i)\\b(?:exists|from|join)\\s+([a-zA-Z0-9_$#-]*\\.?\\s*(?:[a-zA-Z0-9_]+)*)");
+        //\s*CREATE\s+TABLE(?:\s+IF\s+NOT\s+EXISTS)?\s+(\w+)[(]\s*(\w+)\s+(\w+)(?:\s+((?:NOT)?(?:NULL)?)?)?(?:\s+(PRIMARY KEY)?)?,
+        //String regex = "^(INSERT INTO|UPDATE|SELECT|WITH|DELETE)(?:[^;']|(?:'[^']+'))+;\\s*$";
+        //Pattern p = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
+        patternRegex = Pattern.compile("(?i)\\b(?:exists|from|join)\\s+([a-zA-Z0-9_$#-]*\\.?\\s*(?:[a-zA-Z0-9_]+)*)");
+        regexMatcher = patternRegex.matcher(str);
+        while (regexMatcher.find()) {
+            //System.out.println("DEBUG_PRINT:" + regexMatcher.group(1));
+            tableName = regexMatcher.group(1);
+        }
+        return tableName;
+    }
 }

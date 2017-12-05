@@ -25,13 +25,27 @@ public class OnFileRead {
         String fileData = "";
         fileData = onRead("test.txt");
         System.out.println("DEBUG_PRINT:" + fileData);
-        Matcher regexMatcher;
+        /*Matcher regexMatcher;
         //(?is)\b(?:from|into|update)\s+(\w+)
         Pattern pattern = Pattern.compile("(?i)\\b(?:exists|from|join)\\s+([a-zA-Z0-9_$#-]*\\.?\\s*(?:[a-zA-Z0-9_]+)*)");
         regexMatcher = pattern.matcher(fileData);
         while (regexMatcher.find()) {
             System.out.println("DEBUG_PRINT:" + regexMatcher.group(1));
+        }*/
+        String query = "Select uname AS name, hgt AS height, wgt AS weight from table1";
+        Pattern p = Pattern.compile("\\s*\\w+,");
+        Pattern p1 = Pattern.compile("\\s+\\w+\\s+from");
+        Matcher m = p.matcher(query);
+        Matcher m1 = p1.matcher(query);
+        String colsOnly = "";
+        while (m.find()) {
+            colsOnly += (m.group().trim());
         }
+        System.out.println("DEBUG_PRINT:" + colsOnly);
+        while (m1.find()) {
+            colsOnly += (m1.group().substring(0, m1.group().length() - 4).trim());
+        }
+        System.out.println("DEBUG_PRINT::" + colsOnly);
     }
 
     public static String onRead(String argFile) {
