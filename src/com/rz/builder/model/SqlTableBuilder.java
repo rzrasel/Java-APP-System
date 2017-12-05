@@ -5,11 +5,14 @@
  */
 package com.rz.builder.model;
 
+import com.rz.librarycore.OnFileRead;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -24,13 +27,23 @@ public class SqlTableBuilder {
     private SqlStringBuilder sqlStringBuilder;
 
     public static void main(String args[]) {
-        HashMap<String, String> mapTblColVal = new HashMap<String, String>();
+        String fileData = OnFileRead.onRead("test.txt");
+        //System.out.println("DEBUG_PRINT:\n" + fileData);
+        //Pattern pattern = Pattern.compile("(?m)\\(([^)]+)\\)");
+        Pattern pattern = Pattern.compile("(?m)\\-\\-\\s+\\[(.*?)\\]");
+        Matcher matcher = pattern.matcher(fileData);
+        while (matcher.find()) {
+            System.out.println("DEBUG_PRINT:\n" + matcher.group());
+            System.out.println("DEBUG_PRINT:\n" + matcher.group(1));
+            System.out.println("DEBUG_PRINT:\n" + matcher);
+        }
+        /*HashMap<String, String> mapTblColVal = new HashMap<String, String>();
         mapTblColVal.put("key", "value");
         mapTblColVal.put("kone", "one");
         List<String> keyList = new ArrayList<String>(mapTblColVal.keySet());
         Set<String> keySet = mapTblColVal.keySet();
         System.out.println("DEBUG_PRINT:\n" + keyList);
-        System.out.println("DEBUG_PRINT:\n" + keySet);
+        System.out.println("DEBUG_PRINT:\n" + keySet);*/
         /*for (Map.Entry<String, String> e : mapTblColVal.entrySet()) {
             //to get key
             e.getKey();

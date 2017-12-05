@@ -177,6 +177,9 @@ mySb = mySb.replaceAll("/\\*.*?\\*/", "");
 Pattern commentPattern = Pattern.compile("/\\*.*?\\*/", Pattern.DOTALL);
 mySb = commentPattern.matcher(mySb).replaceAll("");
 ```
+```
+/\/\*.*?\*\/|--.*?\n/gs
+```
 
 #### What does (?m) mean at the beginning of a regex
 
@@ -255,6 +258,76 @@ While the regex (?s)[A-Z]{3}. will match:
 
 Despite their names, the two modes aren't necessarily mutually exclusive. In some implementations they cancel out, but, for the most part, they can be used in concert. You can use both at once by writing (?m)(?s) or, in shorter form, (?ms).
 https://stackoverflow.com/questions/27680097/what-does-ms-in-regex-mean
+
+#### How to extract a substring using regex
+https://stackoverflow.com/questions/4662215/how-to-extract-a-substring-using-regex
+
+
+Assuming you want the part between single quotes, use this regular expression with a Matcher:
+
+"'(.*?)'"
+
+Example:
+
+String mydata = "some string with 'the data i want' inside";
+Pattern pattern = Pattern.compile("'(.*?)'");
+Matcher matcher = pattern.matcher(mydata);
+if (matcher.find())
+{
+    System.out.println(matcher.group(1));
+}
+
+Result:
+
+the data i want
+
+#### How to match “any character” in Java Regular Expression?
+https://stackoverflow.com/questions/2912894/how-to-match-any-character-in-java-regular-expression
+
+#### Ans
+Yes, you can. That should work.
+
+. = any char
+\. = the actual dot character
+.? = .{0,1} = match any char zero or one times
+.* = .{0,} = match any char zero or more times
+.+ = .{1,} = match any char one or more times
+
+#### "\\(([^)]+)\\)"
+https://stackoverflow.com/questions/14584018/how-can-i-get-inside-parentheses-value-in-a-string
+The regex means:
+
+    \\(: character (
+    (: start match group
+    [: one of these characters
+    ^: not the following character
+    ): with the previous ^, this means "every character except )"
+    +: one of more of the stuff from the [] set
+    ): stop match group
+    \\): literal closing paranthesis
+
+https://stackoverflow.com/questions/4006113/java-regular-expression-to-extract-content-within-square-brackets
+String in = "Item(s): [item1.test],[item2.qa],[item3.production]";
+
+Pattern p = Pattern.compile("\\[(.*?)\\]");
+Matcher m = p.matcher(in);
+
+while(m.find()) {
+    System.out.println(m.group(1));
+}
+
+
+
+You should use a positive lookahead and lookbehind:
+
+(?<=\[)([^\]]+)(?=\])
+
+(?<=[) Matches everything followed by [
+([^]]+) Matches any string not containing ]
+(?=]) Matches everything before ]
+https://stackoverflow.com/questions/36427259/length-of-a-matcher-in-java
+
+
 
 | END |
 |-----|
