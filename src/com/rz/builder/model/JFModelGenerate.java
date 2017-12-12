@@ -15,8 +15,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import com.rz.librarycore.Toast;
+import com.rz.librarycore.ToastMessage;
 
 /**
  *
@@ -54,6 +57,10 @@ public class JFModelGenerate extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 onExtractTableRow();
+                //Toast.showToast(jPanel1, "Success");
+                ToastMessage toastMessage = new ToastMessage(jFModelGenerate, "Sample text to toast ", 3000);
+                toastMessage.setVisible(true);
+                //JOptionPane.showMessageDialog(jFModelGenerate, "Succesfully genetated", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
                 //System.out.println("CLICKED");
             }
         });
