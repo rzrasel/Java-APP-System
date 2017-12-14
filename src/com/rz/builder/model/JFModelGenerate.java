@@ -58,7 +58,7 @@ public class JFModelGenerate extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 onExtractTableRow();
                 //Toast.showToast(jPanel1, "Success");
-                ToastMessage toastMessage = new ToastMessage(jFModelGenerate, "Sample text to toast ", 3000);
+                ToastMessage toastMessage = new ToastMessage(jFModelGenerate, "Succesfully genetated", 3000);
                 toastMessage.setVisible(true);
                 //JOptionPane.showMessageDialog(jFModelGenerate, "Succesfully genetated", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
                 //System.out.println("CLICKED");
