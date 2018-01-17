@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 public class SqlStringBuilder {
 
     public static void main(String args[]) {
-        /*String tableName = "userrole";
+        String tableName = "userrole";
         String sqlQuery = "";
         String tablePrefix = "tbl_";
         String colPrefix = "usrl_";
@@ -48,7 +48,7 @@ public class SqlStringBuilder {
                 + ");";
         //CONSTRAINT FK_PersonOrder FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
         sqlQuery = new SqlStringBuilder().onCreateTable(tablePrefix + tableName, sqlQuery, colPrefix);
-        System.out.println("DEBUG_PRINT:\n" + sqlQuery);*/
+        System.out.println("DEBUG_PRINT:\n" + sqlQuery);
     }
 
     public String onSimplifyCreateTable(String argSql) {
